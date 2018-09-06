@@ -12,13 +12,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import org.springframework.orm.jpa.vendor.Database;
 
 /**
  * Classe de configuracao da camada de persistencia. Algumas propriedades vem do
@@ -31,52 +35,43 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class ConfiguracaoJPA {
 
-    final Logger logger = LoggerFactory.getLogger(ConfiguracaoJPA.class);
+	final Logger logger = LoggerFactory.getLogger(ConfiguracaoJPA.class);
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
-        entityManager.setPersistenceUnitName("transferencia-eletronica-PU");
-        entityManager.setDataSource(dataSource);
-        entityManager.setPackagesToScan(new String[] { "br.gov.pa.sefa.transferenciaeletronica.core" });
-
+	@Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactory.setDataSource(dataSource());
+        entityManagerFactory.setPersistenceUnitName("transferencia-eletronica-PU");
+        entityManagerFactory.setPackagesToScan(new String[] { "br.gov.pa.sefa.transferenciaeletronica" });
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        entityManager.setJpaVendorAdapter(vendorAdapter);
-        entityManager.setJpaProperties(obterPropriedadesAdicionais());
-        return entityManager;
+        entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
+        entityManagerFactory.setJpaProperties(additionalProperties());
+        return entityManagerFactory;
     }
 
     @Bean
-    @Profile({ "homologacao", "producao" })
-    public DataSource dataSource(Environment environment) {
-        JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
-        dataSourceLookup.setResourceRef(true);
-        String nomeDataSource = PropriedadesCore.obterPropriedade("configuracao.persistence.dataSource");
-        logger.info("Obtendo do datasource: {} no ambiente:", nomeDataSource, environment.getActiveProfiles());
-        return dataSourceLookup.getDataSource(nomeDataSource);
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
+        dataSource.setUrl("jdbc:derby:memory:transferencia-eletronicaDB;create=true");
+        dataSource.setUsername("admin");
+        dataSource.setPassword("");
+        return dataSource;
     }
 
+    private Properties additionalProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.DerbyTenSevenDialect");
+        properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("hibernate.hbm2ddl.import_files", "import.sql");
+        return properties;
+    }
+    
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
-    }
-
-    @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
-        return new PersistenceExceptionTranslationPostProcessor();
-    }
-
-    private Properties obterPropriedadesAdicionais() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto",
-                PropriedadesCore.obterPropriedade("configuracao.persistence.hibernate.hbm2ddl.auto"));
-        properties.setProperty("hibernate.show_sql",
-                PropriedadesCore.obterPropriedade("configuracao.persistence.hibernate.show_sql"));
-        properties.setProperty("hibernate.format_sql",
-                PropriedadesCore.obterPropriedade("configuracao.persistence.hibernate.format_sql"));
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
-        return properties;
     }
 }

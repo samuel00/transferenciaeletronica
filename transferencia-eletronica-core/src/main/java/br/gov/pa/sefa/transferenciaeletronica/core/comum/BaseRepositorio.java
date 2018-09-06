@@ -73,4 +73,6 @@ public class BaseRepositorio<T, ID> {
         return this.entityManager.find(entityClass, id);
     }
 	
+	
+	
 }

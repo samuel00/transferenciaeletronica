@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
@@ -36,9 +37,11 @@ public class ConfiguracaoAplicacao {
         };
     }
     
-    @Bean
-    public TaskScheduler taskScheduler() {
-        // single threaded by default
-        return new ConcurrentTaskScheduler(); 
-    }
+    @Bean(name = "messageSource")
+	public ReloadableResourceBundleMessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageBundle = new ReloadableResourceBundleMessageSource();
+		messageBundle.setBasename("classpath:ValidationMessages");
+		messageBundle.setDefaultEncoding("utf-8");
+		return messageBundle;
+	}
 }
