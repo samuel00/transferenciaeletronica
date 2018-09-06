@@ -1,0 +1,51 @@
+<div ng-controller="cadastroController as usuario">
+    <md-card>
+        <md-card-content layout-padding>
+          <div layout="row" layout-xs="column" layout-sm="column">
+              <div class="col-mr-20">
+                  <div class="secondary-text">Id</div>
+                  <div class="primary-text">{{usuario.model.id === null || usuario.model.id === undefined ? '-' : usuario.model.id}}</div>
+              </div>
+              <div class="col-mr-20">
+                  <div class="secondary-text">Nome</div>
+                  <div class="primary-text">{{usuario.model.nome === null || usuario.model.nome === undefined ? '-' : usuario.model.nome}}</div>
+              </div>
+              <div class="col-mr-20">
+                  <div class="secondary-text">Idade</div>
+                  <div class="primary-text">{{usuario.model.idade === null || usuario.model.idade === undefined ? '-' : usuario.model.idade}}</div>
+              </div>
+
+          </div>
+        </md-card-content>        
+    </md-card>
+    <form class="css-form" name="formUsuario" role="form" novalidate>
+      <md-card>
+        <md-card-content layout="row"> 
+          <md-input-container flex>
+            <label>Nome</label>
+            <input required="" name="nome" ng-model="usuario.model.nome" minlength="{{usuario.nomeMinTam}}">
+            <div ng-messages="formUsuario.nome.$error" >
+              <div ng-message="required">O nome é um campo obrigatório</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container flex>
+            <label>Idade</label>
+            <input required="true" name="idade" ng-model="usuario.model.idade">
+            <div ng-messages="formUsuario.nome.$error">
+              <div ng-message="required">A idade é um campo obrigatório</div>
+            </div>
+          </md-input-container>
+
+        </md-card-content>
+        <div>
+          <md-button class="md-primary" ng-click="formUsuario.$valid && usuario.cadastrar()">
+            <md-icon class="name">&#xE161;</md-icon> Salvar
+          </md-button>
+          <md-button class="md-warn" ng-click="usuario.redirecionaListagem()">
+            <md-icon class="name">clear</md-icon> Cancelar
+          </md-button>
+        </div>
+      </md-card>
+    </form>
+</div>

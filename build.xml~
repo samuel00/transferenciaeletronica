@@ -1,0 +1,194 @@
+<project name="Preparador do Template" default="apagar-arquivos" basedir=".">
+  <description>
+    Preparando template para projeto ${nomeDoProjeto}
+  </description>
+  
+  <!-- Propriedades PARA NOVO PROJETO -->
+  <property name="nomeDoProjeto" value="novo-projeto"/>
+  <property name="dataSource" value="NovoProjetoDS"/>
+  <property name="pacote" value="novoprojeto"/>
+
+
+  <!-- Propriedades Globais -->
+  <property name="api" location="template-api"/>
+  <property name="core" location="template-core"/>
+  <property name="db" location="template-db"/>
+  <property name="intranetui" location="template-intranet-ui"/>
+  <property name="extranetui" location="template-extranet-ui"/>
+
+  <target name="substituicoes-internas">
+    <echo message="1) Substituindo nome do projeto em varios locais"/>
+    <echo message="Substituindo no properties"/>
+    <replace file="${core}/src/main/resources/core.properties" 
+      token="TemplateDS" value="${dataSource}"/>
+
+    <echo message="Substituindo nas classes Java"/>
+    <replace file="${core}/src/main/java/br/gov/pa/sefa/template/core/configuracao/ConfiguracaoJPA.java" 
+      token="templatePU" value="${nomeDoProjeto}-PU"/>
+    <replace file="${core}/src/main/java/br/gov/pa/sefa/template/core/comum/BaseRepositorio.java" 
+      token="templatePU" value="${nomeDoProjeto}-PU"/>
+
+    <replace file="${core}/src/test/java/br/gov/pa/sefa/template/core/testes/configuracao/ConfiguracaoJPATeste.java" 
+      token="templatePU" value="${nomeDoProjeto}-PU"/>
+    <replace file="${core}/src/test/java/br/gov/pa/sefa/template/core/testes/configuracao/ConfiguracaoJPATeste.java" 
+      token="templateDB" value="${nomeDoProjeto}DB"/>
+
+    <replace dir="${core}/src/main/java/br/gov/pa/sefa/" value=".sefa.${pacote}">
+      <include name="**/*.java"/>
+      <replacetoken>.sefa.template</replacetoken>
+    </replace>
+    <replace dir="${core}/src/test/java/br/gov/pa/sefa/" value=".sefa.${pacote}">
+      <include name="**/*.java"/>
+      <replacetoken>.sefa.template</replacetoken>
+    </replace>
+    <replace dir="${api}/src/main/java/br/gov/pa/sefa/" value=".sefa.${pacote}">
+      <include name="**/*.java"/>
+      <replacetoken>.sefa.template</replacetoken>
+    </replace>
+
+    <echo message="Substituindo nos arquivos XML"/>
+    <replace dir="${api}/src/main/webapp/WEB-INF/" value="${nomeDoProjeto}">
+      <include name="*.xml"/>
+      <replacetoken>template</replacetoken>
+    </replace>
+    <replace dir="${intranetui}/WebContent/WEB-INF/" value="${nomeDoProjeto}">
+      <include name="*.xml"/>
+      <replacetoken>template</replacetoken>
+    </replace>
+    <replace dir="${extranetui}/WebContent/WEB-INF/" value="${nomeDoProjeto}">
+      <include name="*.xml"/>
+      <replacetoken>template</replacetoken>
+    </replace>
+
+    <echo message="Substituindo nos arquivos (html, js, json)"/>
+    <replace dir="${api}/src/main/webapp/" value="${nomeDoProjeto}-">
+      <include name="**/*.html"/>
+      <replacetoken>template-</replacetoken>
+    </replace>
+    <replace dir="${api}/src/main/webapp/" value="${nomeDoProjeto}-">
+      <include name="**/*.js"/>
+      <replacetoken>template-</replacetoken>
+    </replace>
+    <replace dir="${api}/src/main/webapp/" value="${nomeDoProjeto}-">
+      <include name="**/*.json"/>
+      <replacetoken>template-</replacetoken>
+    </replace>
+    <replace dir="${intranetui}/WebContent/" value="${nomeDoProjeto}-">
+      <include name="**/*.html"/>
+      <replacetoken>template-</replacetoken>
+    </replace>
+    <replace dir="${intranetui}/WebContent/" value="${nomeDoProjeto}-">
+      <include name="**/*.js"/>
+      <replacetoken>template-</replacetoken>
+    </replace>
+    <replace dir="${intranetui}/WebContent/" value="${nomeDoProjeto}-">
+      <include name="**/*.json"/>
+      <replacetoken>template-</replacetoken>
+    </replace>
+    <replace dir="${extranetui}/WebContent/" value="${nomeDoProjeto}-">
+      <include name="**/*.html"/>
+      <replacetoken>template-</replacetoken>
+    </replace>
+    <replace dir="${extranetui}/WebContent/" value="${nomeDoProjeto}-">
+      <include name="**/*.js"/>
+      <replacetoken>template-</replacetoken>
+    </replace>
+    <replace dir="${extranetui}/WebContent/" value="${nomeDoProjeto}-">
+      <include name="**/*.json"/>
+      <replacetoken>template-</replacetoken>
+    </replace>
+
+    <replace dir="${api}/src/main/webapp/" value="${nomeDoProjeto}/">
+      <include name="**/*.html"/>
+      <replacetoken>template/</replacetoken>
+    </replace>
+    <replace dir="${api}/src/main/webapp/" value="${nomeDoProjeto}/">
+      <include name="**/*.js"/>
+      <replacetoken>template/</replacetoken>
+    </replace>
+    <replace dir="${api}/src/main/webapp/" value="${nomeDoProjeto}/">
+      <include name="**/*.json"/>
+      <replacetoken>template/</replacetoken>
+    </replace>
+    <replace dir="${intranetui}/WebContent/" value="${nomeDoProjeto}/">
+      <include name="**/*.html"/>
+      <replacetoken>template/</replacetoken>
+    </replace>
+    <replace dir="${intranetui}/WebContent/" value="${nomeDoProjeto}/">
+      <include name="**/*.js"/>
+      <replacetoken>template/</replacetoken>
+    </replace>
+    <replace dir="${intranetui}/WebContent/" value="${nomeDoProjeto}/">
+      <include name="**/*.json"/>
+      <replacetoken>template/</replacetoken>
+    </replace>
+    <replace dir="${extranetui}/WebContent/" value="${nomeDoProjeto}/">
+      <include name="**/*.html"/>
+      <replacetoken>template/</replacetoken>
+    </replace>
+    <replace dir="${extranetui}/WebContent/" value="${nomeDoProjeto}/">
+      <include name="**/*.js"/>
+      <replacetoken>template/</replacetoken>
+    </replace>
+    <replace dir="${extranetui}/WebContent/" value="${nomeDoProjeto}/">
+      <include name="**/*.json"/>
+      <replacetoken>template/</replacetoken>
+    </replace>
+   
+    <echo message="Substituindo no README.md"/>
+    <replace file="README.md" token="template" value="${nomeDoProjeto}"/>
+
+    <echo message="Substituindo no log4j.properties"/>
+     <replace file="${core}/src/main/resources/log4j.properties" 
+        token="template" value="${pacote}"/>
+    <replace file="${core}/src/test/resources/log4j.properties" 
+        token="template" value="${pacote}"/>
+
+    <echo message="Substituindo no CHANGELOG"/>
+    <delete file="CHANGELOG" />
+    <touch file="CHANGELOG"/>
+  </target>
+
+  <target name="substituicoes-nos-poms" depends="substituicoes-internas">
+    <echo message="4) Substutindo nos pom.xml"/>
+    <replace file="pom.xml" token="template" value="${nomeDoProjeto}"/>
+    <replace file="${api}/pom.xml" token="template" value="${nomeDoProjeto}"/>
+    <replace file="${core}/pom.xml" token="template" value="${nomeDoProjeto}"/>
+    <replace file="${db}/pom.xml" token="template" value="${nomeDoProjeto}"/>
+    <replace file="${intranetui}/pom.xml" token="template" value="${nomeDoProjeto}"/>
+    <replace file="${extranetui}/pom.xml" token="template" value="${nomeDoProjeto}"/>
+    <replace file="${intranetui}/sonar-project.properties" token="template" value="${nomeDoProjeto}"/>
+    <replace file="${extranetui}/sonar-project.properties" token="template" value="${nomeDoProjeto}"/>
+  </target>
+
+  <target name="exclusao-de-arquivos-exemplo" depends="substituicoes-internas">
+    <echo message="7) Excluindo arquivos de exemplo"/>
+    <delete includeEmptyDirs="true">
+      <fileset dir="${core}/src/main/java/br/gov/pa/sefa/template/core/pessoas" />
+      <fileset dir="${core}/src/test/java/br/gov/pa/sefa/template/core/testes/pessoa" />
+      <fileset dir="${api}/src/main/java/br/gov/pa/sefa/template/api/rest/pessoas" />
+    </delete>
+  </target>
+
+  <target name="renomear" depends="substituicoes-nos-poms, exclusao-de-arquivos-exemplo, substituicoes-internas">
+    <echo message="4) Renomeando pacotes"/>
+    <move file="${core}/src/main/java/br/gov/pa/sefa/template" tofile="${core}/src/main/java/br/gov/pa/sefa/${pacote}"/>
+    <move file="${core}/src/test/java/br/gov/pa/sefa/template" tofile="${core}/src/test/java/br/gov/pa/sefa/${pacote}"/>
+    <move file="${api}/src/main/java/br/gov/pa/sefa/template" tofile="${api}/src/main/java/br/gov/pa/sefa/${pacote}"/>
+    
+    <echo message="5) Renomeando diretorios dos modulos"/>
+    <move file="${api}" tofile="${nomeDoProjeto}-api"/>
+    <move file="${core}" tofile="${nomeDoProjeto}-core"/>
+    <move file="${db}" tofile="${nomeDoProjeto}-db"/>
+    <move file="${intranetui}" tofile="${nomeDoProjeto}-intranet-ui"/>
+    <move file="${extranetui}" tofile="${nomeDoProjeto}-extranet-ui"/>
+  </target>
+
+  <target name="apagar-arquivos" depends="renomear, substituicoes-nos-poms, exclusao-de-arquivos-exemplo, substituicoes-internas">
+    <echo message="6) Excluindo arquivos GIT"/>
+    <delete includeEmptyDirs="true">
+      <fileset dir=".git" />
+    </delete>
+    <delete file="build.xml" />
+  </target>
+</project>

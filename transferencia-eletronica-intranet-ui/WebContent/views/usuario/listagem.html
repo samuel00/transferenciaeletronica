@@ -1,0 +1,80 @@
+<div ng-controller="usuarioController as listagem">
+    <!--<pre>{{listagem.listagem.grade | json}}</pre>-->
+    <!-- <md-button class="md-raised md-primary m-b-20" ng-click="listagem.redirecionarCadastrar()" >Cadastrar Usuário</md-button> -->
+    <!--Mudar mensagem de loading: async-loader-message="sua mensagem aqui"-->
+    <md-card>
+        <div layout="row" layout-xs="column" layout-sm="column">
+            <div layout="row" layout-xs="column" flex="50" flex-sm="100" flex-xs="100">
+                <md-input-container>
+                    <md-button ng-click="listagem.redirecionarCadastrar()" class="md-primary">
+                        <md-icon>add</md-icon> Cadastrar
+                    </md-button>
+                </md-input-container>
+                <md-input-container>
+                    <md-button ng-click="listagem.editar()" ng-disabled="!listagem.selecionado" class="md-primary">
+                        <md-icon>mode_edit</md-icon> Editar
+                    </md-button>
+                </md-input-container>
+                <md-input-container>
+                    <md-button ng-click="listagem.remover(listagem.itemSelecionado)" ng-disabled="!listagem.selecionado" class="md-warn">
+                        <md-icon>delete</md-icon> Deletar
+                    </md-button>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-xs="column" flex="50" flex-sm="100" flex-xs="100" layout-align="end center">  
+                <md-input-container class="md-icon-float md-icon-right md-block">
+                    <label>Filtrar Usuário</label>
+                    <input type="text" name="busca" ng-model="list.filtraUsuario">
+                    <md-icon class="name">&#xE152;</md-icon>
+                </md-input-container>
+            </div>            
+        </div>
+        <md-table-container>
+            <table md-table md-row-select ng-model="listagem.selected" class="mdDataTableResponsive">
+                <thead md-head md-order="listagem.query.order">
+                    <tr md-row>
+                        <th md-column md-order-by="id"><span>ID</span></th>
+                        <th md-column md-order-by="nome"><span>Nome</span></th>
+                        <th md-column md-order-by="idade"><span>Idade</span></th>
+                        <th md-column md-order-by="dataDeCriacao"><span>Data de criação</span></th>
+                        <th md-column md-order-by="dataDeAtualizacao"><span>Data de atualização</span></th>
+                    </tr>
+                </thead>
+                <tbody md-body ng-repeat="item in listagem.listagem.grade | limitTo: listagem.query.limit : (listagem.query.page -1) * listagem.query.limit | orderBy: listagem.query.order | filter: list.filtraUsuario">
+                    <tr md-row md-select="item" md-select-id="id" md-auto-select md-on-select="listagem.logItem">
+                        <td md-cell data-label="ID">{{item.id}}</td>
+                        <td md-cell data-label="Nome">{{item.nome}}</td>
+                        <td md-cell data-label="Idade">{{item.idade}}</td>
+                        <td md-cell data-label="Data de criação">{{item.dataDeCriacao}}</td>
+                        <td md-cell data-label="Data de Atualização">{{item.dataDeAtualizacao}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <md-table-pagination
+            md-label="{page: 'Página:', rowsPerPage: '', of: 'de'}"
+            md-limit="listagem.query.limit"
+            md-limit-options="listagem.limitOptions"
+            md-page="listagem.query.page"
+            md-total="{{listagem.listagem.grade.length}}"
+            md-boundary-links="true">
+        </md-table-pagination>
+    </md-card>
+    <!-- <md-list>
+        <md-list-item ng-repeat="item in listagem.listagem.grade" class="noright">
+            <p class="label-conteudo">
+                <label class="label-titulo">Nome</label><br>
+                {{item.nome}}
+            </p>
+            <span ng-if="item.cpf!=undefined">  {{item.nome}} |  CPF: {{item.cpf | cpf}} </span>
+            <span ng-if="item.cnpj!=undefined"> {{item.nome}} |  CNPJ: {{item.cnpj | cnpj}} </span>
+            <md-button ng-click="listagem.remover(item)" class="md-icon-button" >
+                <md-icon>delete</md-icon>
+            </md-button>
+            <md-button ng-click="listagem.editar(item)" class="md-icon-button" >
+                <md-icon>mode_edit</md-icon>
+            </md-button>    
+        </md-list-item>
+    </md-list> -->
+
+</div>

@@ -1,0 +1,12 @@
+[{
+ 	"descricao": "Template",
+ 	"url": null,
+ 	"nodes": [{
+              "descricao": "Consulta Usuários",
+              "url": null,
+              "nodes": [{
+                    "descricao": "Consulta Usuários",
+                    "url": "/transferencia-eletronica-intranet-ui/"
+                }]
+             }]
+}]

@@ -1,0 +1,50 @@
+<div ng-controller="paginaDoisController as ctrl">
+        <md-steppers></md-steppers>
+    <md-card>
+        <md-table-container>
+            <table md-table ng-model="ctrl.selected" class="mdDataTableResponsive">
+                <thead md-head md-order="ctrl.query.order">
+                    <tr md-row>
+                        <th md-column md-order-by="id">
+                            <span>ID</span>
+                        </th>
+                        <th md-column md-order-by="nome">
+                            <span>Nome</span>
+                        </th>
+                        <th md-column md-order-by="idade">
+                            <span>Idade</span>
+                        </th>
+                        <th md-column md-order-by="dataDeCriacao">
+                            <span>Data de criação</span>
+                        </th>
+                        <th md-column md-order-by="dataDeAtualizacao">
+                            <span>Data de atualização</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody md-body ng-repeat="item in ctrl.usuarioSelecionado | limitTo: ctrl.query.limit : (ctrl.query.page -1) * ctrl.query.limit | orderBy: ctrl.query.order | filter: ctrl.filtraUsuario">
+                    <tr md-row md-select="item" md-select-id="id" md-auto-select md-on-select="ctrl.logItem">
+                        <td md-cell data-label="ID">{{item.id}}</td>
+                        <td md-cell data-label="Nome">{{item.nome}}</td>
+                        <td md-cell data-label="Idade">{{item.idade}}</td>
+                        <td md-cell data-label="Data de criação">{{item.dataDeCriacao | date}}</td>
+                        <td md-cell data-label="Data de Atualização">{{item.dataDeAtualizacao | date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <md-table-pagination md-label="{page: 'Página:', rowsPerPage: '', of: 'de'}" md-limit="ctrl.query.limit" md-limit-options="ctrl.limitOptions"
+            md-page="ctrl.query.page" md-total="{{ctrl.ctrl.grade.length}}" md-boundary-links="true">
+
+        </md-table-pagination>
+    </md-card>
+    <md-button class="md-raised" ng-click="ctrl.voltar()">
+        <md-icon>&#xE5C4;</md-icon> Voltar
+    </md-button>
+    <!-- <md-button class="md-raised md-primary" ng-show="ctrl.selected!=false" ng-click="ctrl.avancar()">
+        <md-icon class="name">&#xE5C8;</md-icon> Teste
+    </md-button> -->
+    <md-button class="md-raised md-primary" ng-click="ctrl.showDetail()">
+        <md-icon class="name">&#xE876;</md-icon> Confirmar
+    </md-button>
+</div>

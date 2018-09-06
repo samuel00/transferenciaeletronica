@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="transferencia-eletronica-extranet-ui" >
+    <head>
+        <base href="/transferencia-eletronica/">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="/sefa-ui/images/favicon.ico" type="image/x-icon">
+        <title>SEFA - Template Extranet UI</title>
+
+        <!-- Angular Material style sheet -->
+        <link rel="stylesheet" href="/sefa-ui/v1/css/angular-material.min.css?220320171021">
+        <link rel="stylesheet" href="/sefa-ui/v1/css/material-custom.css?220320171021">
+        <link rel="stylesheet" href="/sefa-ui/v1/css/md-data-table.css?220320171021">
+        <link rel="stylesheet" href="/sefa-ui/v1/commons/directives/topobar-extranet.css?220320171021">
+        <link rel="stylesheet" href="/sefa-ui/v1/commons/directives/menu-extranet.css?220320171021">
+        <link rel="stylesheet" href="/sefa-ui/v1/commons/directives/mdSteppers.css?220320171021">
+        <link rel="stylesheet" href="assets/css/comum.css?220320171021">
+        <link rel="stylesheet" href="assets/css/comum-altocontraste.css?220320171021">
+    </head>
+    <body layout="column">
+      <cabecalho-impressao></cabecalho-impressao>
+      <div class="animationload">
+        <div class="loader"></div>
+      </div>
+      <topo-bar-extranet></topo-bar-extranet>
+      <div layout="column" flex>
+        <div layout="row" flex>
+          <md-sidenav layout-column class="md-sidenav-left " id="siteMenu" md-component-id="left" md-is-locked-open="lockLeft && $mdMedia('gt-md')">
+            <md-content layout-fill role="navigation">
+              <menu-extranet></menu-extranet>
+            </md-content>
+          </md-sidenav>
+          <md-content layout="column" class="content-wrapper md-padding" flex layout-column id="content" ng-class="{true:'overlay', false:''}[telaNivelAplicacoes]">
+            <header-print></header-print>
+            <div flex>
+              <ngbreadcrumb></ngbreadcrumb>
+              <!-- Conteudo das aplicacoes -->
+              <div ng-view></div>
+            </div>
+            <painel-aplicacoes-extranet></painel-aplicacoes-extranet>
+          </md-content>
+        </div>
+      </div>
+
+    <!-- GOOGLE ANALYTICS E OUTROS -->
+    <script src="/sefa-ui/v1/js/analytics-extranet.min.js?220320171021"></script>
+
+    <!--ASSETS-->
+    <script src="/sefa-ui/v1/js/jquery.min.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/angular-1.5.8/angular.min.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/angular-1.5.8/i18n/angular-locale_pt-br.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/angular-1.5.8/angular-route.min.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/angular-1.5.8/angular-sanitize.min.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/angular-1.5.8/angular-animate.min.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/angular-1.5.8/angular-aria.min.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/angular-1.5.8/angular-messages.min.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/angular-1.5.8/angular-cookies.min.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/plugins/momentjs-2.12.0/moment-with-locales.min.js?220320171021"></script>
+    <script src="/sefa-ui/v1/js/angular-input-masks-standalone.min.js?040120171602"></script>
+    <script src="/sefa-ui/v1/js/ngmask.min.js?220320171021"></script>
+    <!-- Angular Material Library -->
+    <script src="/sefa-ui/v1/js/angular-material.min.js?220320171021"></script>
+
+    <!-- DataTable Material Design -->
+    <script src="/sefa-ui/v1/js/md-data-table.js?220320171021"></script>
+
+    <!--CONFIGS-->
+    <script src="config/modules.js?220320171021"></script>
+    <script src="config/routes.js?220320171021"></script>
+    <script src="config/stores.js?220320171021"></script>
+    <script src="config/events.js?220320171021"></script>
+
+    <!--INIT-->
+    <script src="init.js?220320171021"></script>
+
+    <!--FILTERS-->
+    <script src="commons/filters/mascaras.js?220320171021"></script>
+
+    <!--SERVICES-->
+    <script src="commons/services/util/textHelper.js?220320171021"></script>
+    <script src="/sefa-ui/v1/commons/services/data/toastService.js?220320171021"></script>
+    <script src="/sefa-ui/v1/commons/services/data/storageService.js"></script>
+    
+    <!--MOCK seguranca-->
+    <script src="commons/services/data/seguranca.js?220320171021"></script>
+    <script src="commons/services/data/usuarioService.js?220320171021"></script>
+    <!--<script src="/sefa-ui/v1/commons/services/data/seguranca.js?220320171021"></script>-->
+
+    <!--DIRECTIVES-->
+    <script src="/sefa-ui/v1/commons/directives/topobar-extranet.js?220320171021"></script>
+
+    <!--MOCK menu-->
+    <script src="commons/directives/menu-extranet.js?220320171021"></script>
+    <!--<script src="/sefa-ui/v1/commons/directives/menu-extranet.js?220320171021"></script>-->
+
+    <!--MOCK painel-aplicacoes-->
+    <script src="commons/directives/painel-aplicacoes-extranet.js?220320171021"></script>
+    <!--<script src="/sefa-ui/v1/commons/directives/painel-aplicacoes-extranet.js?220320171021"></script>-->
+
+    <script src="/sefa-ui/v1/commons/directives/ngbreadcrumb_extranet/ngbreadcrumb.js?220320171021"></script>
+    <script src="/sefa-ui/v1/commons/directives/slideable.js?220320171021"></script>
+    <script src="/sefa-ui/v1/commons/directives/asyncLoader.js?220320171021"></script>
+    <script src="/sefa-ui/v1/commons/directives/footer.js?220320171021"></script>
+    <script src="/sefa-ui/v1/commons/directives/mdSteppers.js"></script>
+
+    <!--CONTROLLERS-->
+    <script src="views/homeController.js?220320171021"></script>
+    <script src="views/usuario/usuarioController.js?220320171021"></script>
+    <script src="views/usuario/cadastroController.js?220320171021"></script>
+    <script src="views/paginaDois/paginaDoisController.js?220320171021"></script>
+    <script src="views/paginaUm/paginaUmController.js?220320171021"></script>
+
+    <script src="/sefa-ui/v1/config/events.js?220320171021"></script>
+    <!--SCRIPTS ESPECIFICOS DESTE PROJETO-->
+    <!--<script src="assets/js/comum.js?040120171602"></script>-->
+    </body>
+</html>
