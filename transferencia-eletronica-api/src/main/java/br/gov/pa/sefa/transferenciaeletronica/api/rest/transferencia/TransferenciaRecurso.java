@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.pa.sefa.transferenciaeletronica.api.vo.TransferenciaVO;
+import br.gov.pa.sefa.transferenciaeletronica.core.comum.ExcecaoDeValidacao;
 import br.gov.pa.sefa.transferenciaeletronica.core.comum.ExcecaoGenerica;
 import br.gov.pa.sefa.transferenciaeletronica.core.comum.HTTPResponse;
 import br.gov.pa.sefa.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
@@ -31,7 +33,7 @@ public class TransferenciaRecurso {
     private HTTPResponse httpResponse;
 	
     @RequestMapping(value = "", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
-    public ResponseEntity<?> criarTransferencia(@Valid @RequestBody TransferenciaDTO transferenciaDTO,
+    public ResponseEntity<?> criarAgendamento(@Valid @RequestBody TransferenciaDTO transferenciaDTO,
             BindingResult bindingResult, HttpServletRequest httpServletRequest) throws ExcecaoGenerica {
         try {
             logger.debug("Transferencia Recebida: {},!", transferenciaDTO);
@@ -44,9 +46,24 @@ public class TransferenciaRecurso {
             httpResponse = transferenciaServico.criarTransferencia(transferenciaDTO);
             return new ResponseEntity<HTTPResponse>(httpResponse, httpResponse.getStatus());
         } catch (Exception e) {
-            throw new ExcecaoGenerica(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Ocorreu algo inexperado ao tentar criar um mantis");
+            throw new ExcecaoGenerica(HttpStatus.INTERNAL_SERVER_ERROR,e.getMessage());
         }
     }
+    
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
+    public ResponseEntity<TransferenciaVO> recuperarAgendamentos(HttpServletRequest request) throws ExcecaoDeValidacao, ExcecaoGenerica {
+       logger.debug("Consulta Agendamento");
+       try {
+    	   TransferenciaVO resposta =
+                   new TransferenciaVO(transferenciaServico.getAgendamentos());
+           resposta.setHttpStatus(HttpStatus.OK.value());
+           resposta.setUrl(request.getRequestURI());
+           return new ResponseEntity<>(resposta, HttpStatus.OK);
+       } catch (Exception e) {
+       	logger.error(e.getMessage(), e);
+           throw new ExcecaoGenerica(HttpStatus.INTERNAL_SERVER_ERROR,
+                   "Erro ao consultar informacoes. Tente novamente mais tarde.");
+       }
+}
 
 }

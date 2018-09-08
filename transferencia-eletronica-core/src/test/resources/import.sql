@@ -1,0 +1,1 @@
+insert into tab_transferencia (id, conta_destino, conta_origem, data_agendamento, data_transferencia, status, valor, valorTaxa) values (99999, 'XXXXX', 'YYYYY', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 10.0, 2.0);

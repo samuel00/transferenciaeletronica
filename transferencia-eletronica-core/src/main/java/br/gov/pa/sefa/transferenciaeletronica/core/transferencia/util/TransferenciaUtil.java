@@ -1,28 +1,33 @@
 package br.gov.pa.sefa.transferenciaeletronica.core.transferencia.util;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import br.gov.pa.sefa.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
-import br.gov.pa.sefa.transferenciaeletronica.core.transferencia.entidade.Agendamento;
 import br.gov.pa.sefa.transferenciaeletronica.core.transferencia.enuns.Taxa;
 
 public class TransferenciaUtil {
-	
-	public static final Long ZERO = 0L;
-	
-	public static Taxa identificarTaxa(TransferenciaDTO transferenciaDTO, Agendamento agendamento){
-		Long diferencaEntreData = agendamento != null ? calculaDiferencaEntreData(agendamento.getData()) : ZERO;
-		return null;
-		
+
+	public static final Long ZERO_DIAS = 0L;
+	public static final Long DEZ_DIAS = 10L;
+
+	public static Double calcularTaxa(TransferenciaDTO transferenciaDTO) {
+		Long diferencaEntreData = calculaDiferencaEntreData(transferenciaDTO.getDataTransferencia());
+		if (diferencaEntreData == ZERO_DIAS)
+			return Taxa.A.calcular(transferenciaDTO.getValor(), diferencaEntreData);
+		if (diferencaEntreData <= DEZ_DIAS)
+			return Taxa.B.calcular(transferenciaDTO.getValor(), diferencaEntreData);
+		else
+			return Taxa.C.calcular(transferenciaDTO.getValor(), diferencaEntreData);
 	}
-	
-	public static Long calculaDiferencaEntreData(Date data){
-			LocalDate dataInicio = data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			LocalDate dataFim = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			return ChronoUnit.DAYS.between(dataInicio, dataFim);
+
+	public static Long calculaDiferencaEntreData(Date data) {
+		LocalDate dataAgendamento = data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate hoje = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
+		Long diferencaEntreData = Duration.between(hoje.atStartOfDay(),dataAgendamento.atStartOfDay()).toDays();
+	    return diferencaEntreData;
 	}
 
 }

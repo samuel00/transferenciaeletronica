@@ -1,8 +1,13 @@
 package transferencia;
 
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +29,7 @@ import util.ConstrutorDeRequisicaoUtil;
 import util.ConverterUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ConfiguracaoAplicacao.class})
+@ContextConfiguration(classes = {ConfiguracaoAplicacao.class, ConfiguracaoJPATeste.class})
 @WebAppConfiguration
 @ActiveProfiles("test")
 public class TransferenciaTest extends RecursoBaseTest {
@@ -43,8 +48,17 @@ public class TransferenciaTest extends RecursoBaseTest {
 
 	/** TESTE TRASNFERÊNCIA */
 	@Test
-	public void testeTransferenciaBadRequest() throws Exception {
+	public void testeTransferenciaBadRequestValor() throws Exception {
 		TransferenciaDTO transferencia = new TransferenciaDTO();
+		mockMvc.perform(post(getRecurso())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void testeTransferenciaBadRequestData() throws Exception {
+		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, null,CONTA_ORIGEM, CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
@@ -53,12 +67,47 @@ public class TransferenciaTest extends RecursoBaseTest {
 	}
 	
 	@Test
-	public void testeTransferenciaCreated() throws Exception {
-		TransferenciaDTO transferencia = new TransferenciaDTO(VALOR_OK);
+	public void testeTransferenciaTaxaACreated() throws Exception {
+		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, new Date(),CONTA_ORIGEM, CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
 				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void testeTransferenciaTaxaBCreated() throws Exception {
+		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, adicionaDiasNaData(5L),CONTA_ORIGEM, CONTA_DESTINO);
+		mockMvc.perform(post(getRecurso())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void testeTransferenciaTaxaCCreated() throws Exception {
+		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, adicionaDiasNaData(15L), CONTA_ORIGEM, CONTA_DESTINO);
+		mockMvc.perform(post(getRecurso())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void testeTransferenciaTaxaCBadRequest() throws Exception {
+		TransferenciaDTO transferencia = new TransferenciaDTO(QUARENTA_REAIS, adicionaDiasNaData(41L), CONTA_ORIGEM, CONTA_DESTINO);
+		mockMvc.perform(post(getRecurso())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void testConsultarAgendamento() throws Exception {
+		mockMvc.perform(get(getRecurso()))
+		.andDo(print()).andExpect(status().isOk())
+		.andExpect(jsonPath("$.httpStatus", is(200)))
+		.andReturn();
 	}
 
 }
