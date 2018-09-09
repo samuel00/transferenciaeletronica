@@ -33,9 +33,9 @@ import org.springframework.orm.jpa.vendor.Database;
  */
 @Configuration
 @EnableTransactionManagement
-public class ConfiguracaoJPA {
+public class ConfiguracaoDataSource {
 
-	final Logger logger = LoggerFactory.getLogger(ConfiguracaoJPA.class);
+	final Logger logger = LoggerFactory.getLogger(ConfiguracaoDataSource.class);
 
 	@Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -64,7 +64,6 @@ public class ConfiguracaoJPA {
         properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.DerbyTenSevenDialect");
         properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.hbm2ddl.import_files", "import.sql");
         return properties;
     }
     

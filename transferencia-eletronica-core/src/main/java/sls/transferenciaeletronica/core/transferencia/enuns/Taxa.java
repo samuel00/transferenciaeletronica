@@ -28,6 +28,11 @@ public enum Taxa implements CalculoDeTaxa {
 				return valor * 0.02;
 			return null;
 		}
+	}, VAZIA{
+		@Override
+		public Double calcular(Double valor, Long quantidadeDeDias) {
+			return null;
+		}
 	};
 
 }

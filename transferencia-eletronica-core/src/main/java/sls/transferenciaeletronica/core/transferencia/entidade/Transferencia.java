@@ -42,6 +42,7 @@ public class Transferencia {
 
 	public Transferencia(TransferenciaDTO transferenciaDTO, Double valorTaxa) {
 		this.dataAgendamento = new Date();
+		this.dataTransferencia = transferenciaDTO.getDataTransferencia();
 		this.status = StatusTransferencia.AGUARDANDO;
 		this.valorTaxa = valorTaxa;
 		this.valor = transferenciaDTO.getValor();

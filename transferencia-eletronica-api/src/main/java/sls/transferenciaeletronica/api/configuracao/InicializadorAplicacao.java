@@ -12,8 +12,7 @@ import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import sls.transferenciaeletronica.core.configuracao.ConfiguracaoJPA;
-import sls.transferenciaeletronica.core.configuracao.ConfiguracaoJPADesenvolvimento;
+import sls.transferenciaeletronica.core.configuracao.ConfiguracaoDataSource;
 import sls.transferenciaeletronica.core.configuracao.PropriedadesCore;
 import sls.transferenciaeletronica.manager.configuracao.ConfiguracaoManagerDataSource;
 
@@ -31,8 +30,7 @@ public class InicializadorAplicacao implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(ConfiguracaoAplicacao.class);
-        rootContext.register(ConfiguracaoJPA.class);
-        rootContext.register(ConfiguracaoJPADesenvolvimento.class);
+        rootContext.register(ConfiguracaoDataSource.class);
         rootContext.register(ConfiguracaoManagerDataSource.class);
 
         servletContext.addListener(new ContextLoaderListener(rootContext));

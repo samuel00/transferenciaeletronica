@@ -12,9 +12,12 @@ public class TransferenciaUtil {
 
 	public static final Long ZERO_DIAS = 0L;
 	public static final Long DEZ_DIAS = 10L;
+	public static final Object OBJETO_NULO = null;
 
 	public static Double calcularTaxa(TransferenciaDTO transferenciaDTO) {
 		Long diferencaEntreData = calculaDiferencaEntreData(transferenciaDTO.getDataTransferencia());
+		if (diferencaEntreData < ZERO_DIAS)
+			return Taxa.VAZIA.calcular(transferenciaDTO.getValor(), diferencaEntreData);
 		if (diferencaEntreData == ZERO_DIAS)
 			return Taxa.A.calcular(transferenciaDTO.getValor(), diferencaEntreData);
 		if (diferencaEntreData <= DEZ_DIAS)

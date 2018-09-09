@@ -13,7 +13,7 @@ public class TransferenciaDTO implements Serializable{
 	private static final long serialVersionUID = 8863335127038176340L;
 	
 	@NotNull(message = "{error.data.transeferencia.not.null}")
-	@JsonFormat(pattern="dd/MM/yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy", timezone = "GMT-3")
 	private Date dataTransferencia;
 	
 	@Null(message = "{error.data.agendamento.null}")

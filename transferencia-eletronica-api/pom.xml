@@ -12,8 +12,10 @@
 	<packaging>war</packaging>
 
 	<build>
+	<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<!-- Jetty Plugin -->
+			
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
@@ -123,16 +125,6 @@
 					<manifest>
 						<addDefaultImplementationEntries>false</addDefaultImplementationEntries>
 					</manifest>
-					<archive>
-						<manifestEntries>
-							<Major-Version>${project.version}</Major-Version>
-							<Build-Version>${build.number}</Build-Version>
-							<Build-Time>${maven.build.timestamp}</Build-Time>
-							<Build-Host>${agent.name}</Build-Host>
-							<Build-User>${user.name}</Build-User>
-							<Weblogic-Application-Version>${project.version}</Weblogic-Application-Version>
-						</manifestEntries>
-					</archive>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -223,7 +215,6 @@
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
 			<version>10.12.1.1</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.el</groupId>

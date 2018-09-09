@@ -13,6 +13,7 @@
     <description>Projeto que contem os arquivos estaticos (HTML, CSS e JavaScript) com a view do projeto.</description>
 
 	<build>
+	<finalName>${project.artifactId}</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -25,16 +26,6 @@
 						<manifest>
 							<addDefaultImplementationEntries>false</addDefaultImplementationEntries>
 						</manifest>
-						<archive>
-							<manifestEntries>
-								<Major-Version>${project.version}</Major-Version>
-								<Build-Version>${build.number}</Build-Version>
-								<Build-Time>${maven.build.timestamp}</Build-Time>
-								<Build-Host>${agent.name}</Build-Host>
-								<Build-User>${user.name}</Build-User>
-								<Weblogic-Application-Version>${project.version}</Weblogic-Application-Version>
-							</manifestEntries>
-						</archive>
 					</configuration>
 				</plugin>
 				<plugin>
