@@ -21,10 +21,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import br.gov.pa.sefa.transferenciaeletronica.api.configuracao.ConfiguracaoAplicacao;
-import br.gov.pa.sefa.transferenciaeletronica.core.testes.configuracao.ConfiguracaoJPATeste;
-import br.gov.pa.sefa.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
 import configuracao.RecursoBaseTest;
+import sls.transferenciaeletronica.api.configuracao.ConfiguracaoAplicacao;
+import sls.transferenciaeletronica.core.testes.configuracao.ConfiguracaoJPATeste;
+import sls.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
 import util.ConstrutorDeRequisicaoUtil;
 import util.ConverterUtil;
 
@@ -95,7 +95,7 @@ public class TransferenciaTest extends RecursoBaseTest {
 	
 	@Test
 	public void testeTransferenciaTaxaCBadRequest() throws Exception {
-		TransferenciaDTO transferencia = new TransferenciaDTO(QUARENTA_REAIS, adicionaDiasNaData(41L), CONTA_ORIGEM, CONTA_DESTINO);
+		TransferenciaDTO transferencia = new TransferenciaDTO(QUARENTA_REAIS, adicionaDiasNaData(45L), CONTA_ORIGEM, CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
