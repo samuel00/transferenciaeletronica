@@ -11,6 +11,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="TAB_REQUISICAO_ERRO")
 public class Erro implements Serializable{
@@ -20,10 +22,12 @@ public class Erro implements Serializable{
 	@Id
 	@GeneratedValue
 	@Column(name="tae_id")
+	@JsonIgnore
 	private long id;
 	
 	@OneToOne
 	@JoinColumn(name="tae_requisicao_id", unique=true, nullable=false, updatable=false)
+	@JsonIgnore
 	private Requisicao requisicao;
 	
 	@Column(name= "tae_motivo_ocorrencia", nullable=true, updatable = false)
@@ -36,7 +40,7 @@ public class Erro implements Serializable{
 	@Column(name= "tae_metodo_ocorrencia", nullable=true, updatable = false)
 	private String metodo;
 	
-	@Column(name= "tae_stacktrace",  updatable = false)
+	@Column(name= "tae_stacktrace",  updatable = false, columnDefinition="clob")
 	@Lob
 	private String stacktrace;
 

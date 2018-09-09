@@ -11,7 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="TAB_REQUISICAO_IP_BLOQUEADO", schema="MONITORAMENTO_SERVICE")
+@Table(name="TAB_REQUISICAO_IP_BLOQUEADO")
 public class IPBloqueado implements Serializable{
 	
 	private static final long serialVersionUID = 2969270434992581763L;

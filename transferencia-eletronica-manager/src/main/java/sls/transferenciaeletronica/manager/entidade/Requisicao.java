@@ -7,13 +7,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="TAB_REQUISICAO")
@@ -24,6 +24,7 @@ public class Requisicao implements Serializable{
 	@Id
 	@Column(name="tar_id")
 	@GeneratedValue
+	@JsonIgnore
 	private Long id;
 	
 	@Column(name="tar_data", nullable=false)
@@ -58,13 +59,6 @@ public class Requisicao implements Serializable{
 	private Erro erro;
 	
 	public Requisicao(){}
-	
-	public Requisicao(RequisicaoDTO dto){
-		setData(dto.getData());
-		setTempoExecucao(dto.getTempoExecucao());
-		setIpOrigem(dto.getIpOrigem());
-		setTipo(dto.getTipo());
-	}
 
 	public Long getId() {
 		return id;

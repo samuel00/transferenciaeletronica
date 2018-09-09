@@ -3,27 +3,24 @@ package sls.transferenciaeletronica.manager.entidade;
 import java.util.Calendar;
 
 public class RequisicaoDTO {
-	
-	private Long id;
+
 	private Calendar data;
+
 	private long tempoExecucao;
+
 	private String ipOrigem;
+
 	private String tipo;
+
 	private Parametro parametro;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private Erro erro;
 
 	public Calendar getData() {
 		return data;
 	}
 
-	public void setData(Calendar data){
+	public void setData(Calendar data) {
 		this.data = data;
 	}
 
@@ -57,5 +54,13 @@ public class RequisicaoDTO {
 
 	public void setParametro(Parametro parametro) {
 		this.parametro = parametro;
+	}
+
+	public Erro getErro() {
+		return erro;
+	}
+
+	public void setErro(Erro erro) {
+		this.erro = erro;
 	}
 }

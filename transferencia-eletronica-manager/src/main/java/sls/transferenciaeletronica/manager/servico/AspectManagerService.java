@@ -1,6 +1,7 @@
 package sls.transferenciaeletronica.manager.servico;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -111,5 +112,10 @@ public class AspectManagerService {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+	}
+	
+	@Transactional
+	public List<Requisicao> getRequisicoes() {
+		return aspectManagerRepositorio.getRequisicoes();
 	}
 }

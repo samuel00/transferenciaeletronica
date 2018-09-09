@@ -11,6 +11,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="TAB_REQUISICAO_PARAMETRO")
 public class Parametro implements Serializable{
@@ -20,10 +22,12 @@ public class Parametro implements Serializable{
 	@Id
 	@Column(name="tap_id")
 	@GeneratedValue
+	@JsonIgnore
 	private long id;
 	
 	@OneToOne
 	@JoinColumn(name="tap_requisicao_id")
+	@JsonIgnore
 	private Requisicao requisicao;
 	
 	@Column(name= "tap_header", nullable=false, updatable = false, columnDefinition="clob")
@@ -109,8 +113,4 @@ public class Parametro implements Serializable{
 	public void setClasseInvocada(String classeInvocada) {
 		this.classeInvocada = classeInvocada;
 	}
-
-	
-	
-
 }
