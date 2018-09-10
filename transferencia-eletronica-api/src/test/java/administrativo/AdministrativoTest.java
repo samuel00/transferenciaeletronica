@@ -41,7 +41,8 @@ public class AdministrativoTest  extends RecursoBaseTest {
 	@Test
 	public void testConsultarAdministrativo() throws Exception {
 		mockMvc.perform(get(getRecurso()))
-		.andDo(print()).andExpect(status().isOk())
+		.andDo(print())
+		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.httpStatus", is(200)))
 		.andExpect(jsonPath("$.quantidadeRequisicoes", is(1)))
 		.andReturn();

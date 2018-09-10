@@ -1,6 +1,7 @@
 package transferencia;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -51,62 +52,75 @@ public class TransferenciaTest extends RecursoBaseTest {
 	public void testeTransferenciaBadRequestValor() throws Exception {
 		TransferenciaDTO transferencia = new TransferenciaDTO();
 		mockMvc.perform(post(getRecurso())
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
-				.andExpect(status().isBadRequest());
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.status", is("BAD_REQUEST")))
+		.andReturn();
 	}
 	
 	@Test
 	public void testeTransferenciaBadRequestData() throws Exception {
 		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, null,CONTA_ORIGEM, CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso())
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
-				.andDo(print())
-				.andExpect(status().isBadRequest());
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+		.andDo(print())
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.status", is("BAD_REQUEST")))
+		.andReturn();
 	}
 	
 	@Test
 	public void testeTransferenciaTaxaACreated() throws Exception {
 		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, new Date(),CONTA_ORIGEM, CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso())
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
-				.andExpect(status().isCreated());
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+		.andExpect(status().isCreated())
+		.andExpect(jsonPath("$.status", is("CREATED")))
+		.andReturn();
 	}
 	
 	@Test
 	public void testeTransferenciaTaxaBCreated() throws Exception {
 		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, adicionaDiasNaData(5L),CONTA_ORIGEM, CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso())
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
-				.andExpect(status().isCreated());
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+		.andExpect(status().isCreated())
+		.andExpect(jsonPath("$.status", is("CREATED")))
+		.andReturn();
 	}
 	
 	@Test
 	public void testeTransferenciaTaxaCCreated() throws Exception {
 		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, adicionaDiasNaData(15L), CONTA_ORIGEM, CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso())
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
-				.andExpect(status().isCreated());
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+		.andExpect(status().isCreated())
+		.andExpect(jsonPath("$.status", is("CREATED")))
+		.andReturn();
 	}
 	
 	@Test
 	public void testeTransferenciaTaxaCBadRequest() throws Exception {
 		TransferenciaDTO transferencia = new TransferenciaDTO(QUARENTA_REAIS, adicionaDiasNaData(45L), CONTA_ORIGEM, CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso())
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
-				.andExpect(status().isBadRequest());
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.status", is("BAD_REQUEST")))
+		.andReturn();
 	}
 	
 	@Test
 	public void testConsultarAgendamento() throws Exception {
 		mockMvc.perform(get(getRecurso()))
-		.andDo(print()).andExpect(status().isOk())
+		.andExpect(status().isOk())
 		.andExpect(jsonPath("$.httpStatus", is(200)))
+		.andExpect(jsonPath("$.quantidadeTransferencias", notNullValue()))
 		.andReturn();
 	}
 
