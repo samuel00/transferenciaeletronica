@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="transferencia-eletronica" >
+    <head>
+        <base href="/transferencia-eletronica-extranet-ui/">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Transferencia Eletrônica</title>
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    	<link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">
+        
+        <!-- Angular Material style sheet -->
+        <link rel ="stylesheet" href = "assets/css/angular-material.min.css">
+      	<link rel="stylesheet" href="assets/css/ng-table.min.css">
+        <script src="commons/lib/angular.min.js"></script>
+        <script src = "commons/lib/angular-animate.min.js"></script>
+      	<script src = "commons/lib/angular-aria.min.js"></script>
+      	<script src = "commons/lib/angular-messages.min.js"></script>
+      	<script src = "commons/lib/angular-material.min.js"></script>
+      
+      	<script src="commons/lib/moment.min.js"></script>
+    	<script src="commons/lib/angular-route.min.js"></script>
+    	<script src="commons/lib/angular-resource.min.js"></script>
+		<script src="commons/lib/ng-table.min.js"></script>
+    	<script src="init.js"></script>
+    	 <script src="views/transferencia/transferencia-controller.js"></script>
+    	<script src="commons/services/data/transferencia-servicos.js"></script>
+    </head>
+     <body>
+    	<div class="container">
+        	<ng-view></ng-view>
+    	</div><!-- fim container -->
+    </body>
+</html>

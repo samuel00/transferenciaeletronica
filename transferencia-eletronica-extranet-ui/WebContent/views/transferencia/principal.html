@@ -1,0 +1,32 @@
+<div class="jumbotron">
+    <h1 class="text-center">Transferência Eletrônica</h1>
+</div>
+<p ng-show="mensagem.length" class="alert alert-info">{{mensagem}}</p>
+<div class="row">
+    <div class="col-md-12">
+        <form>
+        <div class="input-group">
+            
+            <span class="input-group-btn">
+                 <a href="#/transferencia/new" class="btn btn-primary">Nova Transferência</a>
+            </span>
+        </div>
+        
+        </form>
+    </div>
+</div>
+
+
+			<md-card >
+			
+				<table ng-table="vm.tableParams" class="table" show-filter="true">
+    				<tr ng-repeat="item in transferencias">
+        				<td class="text-center" title="'Conta Destino'"> {{item.contaDestino}}</td>
+        				<td  class="text-center" title="'Conta Origem'"> {{item.contaOrigem}}</td>
+        				<td class="text-center" title="'Data Agendamento'"> {{item.dataAgendamento}}</td>
+        				<td class="text-center" title="'Data Transferencia'"> {{item.dataTransferencia}}</td>
+        				<td class="text-center" title="'Valor'"> {{item.valor}}</td>
+        				<td class="text-center" title="'Valor da Taxa'"> {{item.valorTaxa}}</td>
+    				</tr>
+				</table>
+			</md-card>
