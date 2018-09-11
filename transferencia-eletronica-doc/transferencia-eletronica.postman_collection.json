@@ -1,0 +1,193 @@
+{
+	"variables": [],
+	"info": {
+		"name": "transferencia-eletronica",
+		"_postman_id": "f22a7212-bb0d-68cf-eb2f-2da8de5028ed",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Status",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/public/status",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Requisição para verificar a disponibilidade do serviço"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Administrativo",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/administrativo",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Criar Agendamento Taxa A",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataTransferencia\" : \"09/09/2018\",\n  \"valor\" : 10.0,\n  \"contaOrigem\" : \"104736\",\n  \"contaDestino\" : \"204789\"\n}"
+				},
+				"description": "Requisição para criar o agendamento da transferência"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Criar AgendamentoTaxa B",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataTransferencia\" : \"14/09/2018\",\n  \"valor\" : 10.0,\n  \"contaOrigem\" : \"104736\",\n  \"contaDestino\" : \"204789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Criar Agendamento Taxa C-1",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataTransferencia\" : \"24/09/2018\",\n  \"valor\" : 1000.0,\n  \"contaOrigem\" : \"104736\",\n  \"contaDestino\" : \"204789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Criar Agendamento Taxa C-2",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataTransferencia\" : \"30/09/2018\",\n  \"valor\" : 1000.0,\n  \"contaOrigem\" : \"104736\",\n  \"contaDestino\" : \"204789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Criar Agendamento Taxa C-3",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataTransferencia\" : \"10/10/2018\",\n  \"valor\" : 1000.0,\n  \"contaOrigem\" : \"104736\",\n  \"contaDestino\" : \"204789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Criar Agendamento Taxa C-4",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataTransferencia\" : \"21/10/2018\",\n  \"valor\" : 1001.0,\n  \"contaOrigem\" : \"104736\",\n  \"contaDestino\" : \"204789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Bad Request Taxa C-1",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataTransferencia\" : \"21/10/2018\",\n  \"valor\" : 1000.0,\n  \"contaOrigem\" : \"104736\",\n  \"contaDestino\" : \"204789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Bad Request Taxa C-2",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataTransferencia\" : \"08/09/2018\",\n  \"valor\" : 1000.0,\n  \"contaOrigem\" : \"104736\",\n  \"contaDestino\" : \"204789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
