@@ -65,7 +65,6 @@ public class TransferenciaTest extends RecursoBaseTest {
 		mockMvc.perform(post(getRecurso())
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
-		.andDo(print())
 		.andExpect(status().isBadRequest())
 		.andExpect(jsonPath("$.status", is("BAD_REQUEST")))
 		.andReturn();
@@ -77,6 +76,7 @@ public class TransferenciaTest extends RecursoBaseTest {
 		mockMvc.perform(post(getRecurso())
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+		.andDo(print())
 		.andExpect(status().isCreated())
 		.andExpect(jsonPath("$.status", is("CREATED")))
 		.andReturn();

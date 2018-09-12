@@ -23,8 +23,8 @@ public class TransferenciaVO extends PadraoVO{
 			TransferenciaDTO transferenciaDTO = new TransferenciaDTO();
 			transferenciaDTO.setContaDestino(transferencia.getContaDestino());
 			transferenciaDTO.setContaOrigem(transferencia.getContaOrigem());
-			transferenciaDTO.setValor(transferencia.getValor());
-			transferenciaDTO.setValorTaxa(transferencia.getValorTaxa());
+			transferenciaDTO.setValor(transferencia.getValor().doubleValue());
+			transferenciaDTO.setValorTaxa(transferencia.getValorTaxa().doubleValue());
 			transferenciaDTO.setDataTransferencia(transferencia.getDataTransferencia());
 			transferenciaDTO.setDataAgendamento(transferencia.getDataAgendamento());
 			this.transferencias.add(transferenciaDTO);

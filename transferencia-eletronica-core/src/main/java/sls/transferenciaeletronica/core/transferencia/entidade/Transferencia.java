@@ -1,5 +1,6 @@
 package sls.transferenciaeletronica.core.transferencia.entidade;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -31,9 +32,9 @@ public class Transferencia {
 	@Column(name="conta_destino")
 	private String contaDestino;
 	
-	private Double valor;
+	private BigDecimal valor;
 	
-	private Double valorTaxa;
+	private BigDecimal valorTaxa;
 	
 	private StatusTransferencia status;
 
@@ -44,8 +45,8 @@ public class Transferencia {
 		this.dataAgendamento = new Date();
 		this.dataTransferencia = transferenciaDTO.getDataTransferencia();
 		this.status = StatusTransferencia.AGUARDANDO;
-		this.valorTaxa = valorTaxa;
-		this.valor = transferenciaDTO.getValor();
+		this.valorTaxa = new BigDecimal(valorTaxa.toString());
+		this.valor = new BigDecimal(transferenciaDTO.getValor().toString());
 		this.contaDestino = transferenciaDTO.getContaDestino();
 		this.contaOrigem = transferenciaDTO.getContaOrigem();
 	}
@@ -90,19 +91,19 @@ public class Transferencia {
 		this.contaDestino = contaDestino;
 	}
 
-	public Double getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
 
-	public void setValor(Double valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 
-	public Double getValorTaxa() {
+	public BigDecimal getValorTaxa() {
 		return valorTaxa;
 	}
 
-	public void setValorTaxa(Double valorTaxa) {
+	public void setValorTaxa(BigDecimal valorTaxa) {
 		this.valorTaxa = valorTaxa;
 	}
 
