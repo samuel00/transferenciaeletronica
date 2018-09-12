@@ -30,6 +30,17 @@
 			"response": []
 		},
 		{
+			"name": "GET Agendamento",
+			"request": {
+				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "POST Criar Agendamento Taxa A",
 			"request": {
 				"url": "http://localhost:8080/transferencia-eletronica-api/api/transferencia",
