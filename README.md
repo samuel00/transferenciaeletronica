@@ -26,6 +26,7 @@ $ mvn post-clean
 * [AngularJS](https://angularjs.org/)
 * [Liquibase](http://www.liquibase.org/)
 * [RESTful](https://pt.wikipedia.org/wiki/REST)
+* [Docker] (https://www.docker.com/)
 
 
 ## Estrutura consolidada do projeto
@@ -48,7 +49,9 @@ transferencia-eletronica
 |   ├── src
 |   └── pom.xml
 ├── README.md
+└── Dockerfile
 └── pom.xml
+
 ```
 
 ### Descrição da estrutura
@@ -86,13 +89,24 @@ transferencia-eletronica
 
 5. Excutando o projeto
 
-    5.1 API no Weblogic:
+	5.1 Com Docker:
+	
+		# Construindo Imagem
+		$ docker build -t transferencia-eletronica-docker .
+		# Executando a imagem
+		$ docker run -p 8080:8080 -d transferencia-eletronica-docker
+		# Para testar se está funcionando
+		$ curl http://localhost:8080/transferencia-eletronica-api/api/public/status	
+		# Front-End - Acesse o navegador e adicione o endereço
+		  http://localhost:8080/transferencia-eletronica-extranet-ui/#/transferencia	
+
+    5.2 API no Weblogic:
 
         $ cd transferencia-eletronica-api
         $ mvn clean package wls:deploy
         Acesse http://localhost:7001/transferencia-eletronica-api/
 
-    5.2 UI é constituído por HTML, JS e CSS, basta colocar como um diretório no Weblogic, Apache ou um Servlet Conatainer, como o Jetty.
+    5.3 UI é constituído por HTML, JS e CSS, basta colocar como um diretório no Weblogic, Apache ou um Servlet Conatainer, como o Jetty.
 
         $ Acesse http://{servidor}:{porta}/transferencia-eletronica-ui/#
 
