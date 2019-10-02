@@ -20,13 +20,13 @@ $ mvn post-clean
 * Java 8.X
 * [Maven](https://maven.apache.org/) 3.X
 * [Spring](https://spring.io/)
-* [JPA 2.0 | Hibernate](http://hibernate.org/)
+* JPA 2.0|[Hibernate](http://hibernate.org/)
 * [Jetty](http://www.eclipse.org/jetty/) (desenvolvimento)
 * [Weblogic 12c](http://www.oracle.com/technetwork/middleware/weblogic/)
 * [AngularJS](https://angularjs.org/)
 * [Liquibase](http://www.liquibase.org/)
 * [RESTful](https://pt.wikipedia.org/wiki/REST)
-* [Docker](https://www.docker.com)
+* [Docker] (https://www.docker.com/)
 
 
 ## Estrutura consolidada do projeto
