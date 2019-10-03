@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>sls</groupId>
@@ -36,6 +37,12 @@
 		<mockito.version>1.10.19</mockito.version>
 		<h2.version>1.4.192</h2.version>
 		<jetty.plugin.version>9.2.14.v20151106</jetty.plugin.version>
+
+		<!--set this to your docker acct name -->
+		<docker.image.prefix>${project.artifactId}</docker.image.prefix>
+
+		<!--Set to name of project -->
+		<docker.image.name>${project.artifactId}-docker</docker.image.name>
 
 	</properties>
 
@@ -123,6 +130,42 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.20.0</version>
+				<inherited>false</inherited>
+
+				<configuration>
+
+					<!--<dockerHost>http://127.0.0.1:2375</dockerHost> -->
+					<dockerHost>unix:///var/run/docker.sock</dockerHost>
+
+					<verbose>true</verbose>
+					<images>
+						<image>
+							<name>${docker.image.prefix}/${docker.image.name}</name>
+							<build>
+								<dockerFileDir>${project.basedir}</dockerFileDir>
+
+								<!--copies artficact to docker build dir in target -->
+								<assembly>
+									<descriptorRef></descriptorRef>
+									<targetDir>/target</targetDir>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+						</image>
+					</images>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
