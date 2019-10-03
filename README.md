@@ -1,20 +1,5 @@
 # Template
 
-## Build Status
-* [![Build Status](http://x-oc-config.sefa.pa.gov.br/jenkins/buildStatus/icon?job=transferencia-eletronica/desenvolvimento)](http://x-oc-config.sefa.pa.gov.br/jenkins/job/transferencia-eletronica/job/desenvolvimento) - desenvolvimento
-* [![Build Status](http://x-oc-config.sefa.pa.gov.br/jenkins/buildStatus/icon?job=transferencia-eletronica/homologacao)](http://x-oc-config.sefa.pa.gov.br/jenkins/job/transferencia-eletronica/job/homologacao) - homologacao
-* [![Build Status](http://x-oc-config.sefa.pa.gov.br/jenkins/buildStatus/icon?job=transferencia-eletronica/master)](http://x-oc-config.sefa.pa.gov.br/jenkins/job/transferencia-eletronica/job/master) - master/producao
-
-Esse transferencia-eletronica tem por objetivo exemplificar como ficará uma aplicação na arquitetura atual.
-Para preparar o transferencia-eletronica para um **NOVO PROJETO** basta alterar as propriedades `nomeDoProjeto`, `dataSource` e `pacote` no arquivo `build.xml`, depois 
-executar o seguinte comando na raíz do projeto:
-```
-$ mvn post-clean
-````
-
-- Não importar o projeto no eclipse antes de rodar o comando **post-clean**
-
-
 ## Tecnologias Utilizadas (informações das versões no arquivo `pom.xml`)
 
 * Java 8.X
@@ -26,8 +11,8 @@ $ mvn post-clean
 * [AngularJS](https://angularjs.org/)
 * [Liquibase](http://www.liquibase.org/)
 * [RESTful](https://pt.wikipedia.org/wiki/REST)
-* [Docker] (https://www.docker.com/)
-* [Fabric8 io] (https://fabric8.io/)
+* [Docker](https://www.docker.com/)
+* [Fabric8 io](https://fabric8.io/)
 
 
 ## Estrutura consolidada do projeto
