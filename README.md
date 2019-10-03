@@ -27,6 +27,7 @@ $ mvn post-clean
 * [Liquibase](http://www.liquibase.org/)
 * [RESTful](https://pt.wikipedia.org/wiki/REST)
 * [Docker] (https://www.docker.com/)
+* [Fabric8 io] (https://fabric8.io/)
 
 
 ## Estrutura consolidada do projeto
@@ -89,12 +90,13 @@ transferencia-eletronica
 
 5. Excutando o projeto
 
-	5.1 Com Docker:
+	5.1 Com Fabric8 io:
 	
 		# Construindo Imagem
-		$ docker build -t transferencia-eletronica-docker .
+		$ mvn clean install
+		$ mvn docker:build --non-recursive
 		# Executando a imagem
-		$ docker run -p 8080:8080 -d transferencia-eletronica-docker
+		$ docker run -p 8080:8080 -d transferencia-eletronica/transferencia-eletronica-docker
 		# Para testar se está funcionando
 		$ curl http://localhost:8080/transferencia-eletronica-api/api/public/status	
 		# Front-End - Acesse o navegador e adicione o endereço
