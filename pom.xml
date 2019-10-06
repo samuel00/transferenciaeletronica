@@ -208,7 +208,7 @@
 								</env>
 								<!--wait for db to start -->
 								<wait>
-									<time>50000</time>
+									<time>70000</time>
 								</wait>
 							</run>
 						</image>
