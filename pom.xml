@@ -153,7 +153,7 @@
 							<build>
 								<dockerFileDir>${project.basedir}</dockerFileDir>
 
-								<!--copies artficact to docker build dir in target -->
+								copies artficact to docker build dir in target
 								<assembly>
 									<descriptorRef></descriptorRef>
 									<targetDir>/target</targetDir>
@@ -163,6 +163,54 @@
 									<tag>${project.version}</tag>
 								</tags>
 							</build>
+							<run>
+								<ports>
+									<port>8080:8080</port>
+								</ports>
+								<links>
+									<link>mysqldb:mysqldb</link>
+								</links>
+								<env>
+									<SPRING_PROFILES_ACTIVE>mysql</SPRING_PROFILES_ACTIVE>
+								</env>
+								<dependsOn>
+									<container>mysql</container>
+								</dependsOn>
+							</run>
+						</image>
+						<!--mysql container -->
+						<image>
+							<name>mysql</name>
+							<alias>mysqldb</alias>
+							
+							<build>
+								<dockerFile>${project.basedir}/Dockerfile.MySQL</dockerFile>
+								
+								<assembly>
+									<descriptorRef></descriptorRef>
+									<targetDir>/target</targetDir>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+
+							<run>
+								<!--expose port for dn -->
+								<ports>
+									<port>3306:3306</port>
+								</ports>
+								<!--set env prams for mysql image -->
+								<env>
+									<MYSQL_DATABASE>transferenciaeletronica</MYSQL_DATABASE>
+									<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
+								</env>
+								<!--wait for db to start -->
+								<wait>
+									<time>50000</time>
+								</wait>
+							</run>
 						</image>
 					</images>
 				</configuration>
