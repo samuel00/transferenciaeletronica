@@ -34,8 +34,11 @@ transferencia-eletronica
 ├── transferencia-eletronica-ui
 |   ├── src
 |   └── pom.xml
+└── sql-scripts
+|   ├── CreateTable.sql
 ├── README.md
 └── Dockerfile
+└── Dockerfile.MySQL
 └── pom.xml
 
 ```
@@ -58,8 +61,8 @@ transferencia-eletronica
 
 1. Após **clonar** o repositório na sua máquina, entre no diretório do projeto e mude para a branch de desenvolvimento **(se já não estiver nela)**:
 
-        $ git branch desenvolvimento origin/desenvolvimento (caso a branch não exista localmente)
-        $ git checkout desenvolvimento
+        $ git branch docker-with-fabric8-io origin/desenvolvimento (caso a branch não exista localmente)
+        $ git checkout docker-with-fabric8-io
 
 2. Baixando as dependências, executanto os testes e subindo no Jetty (caso queira desabilitar o start do Jetty após o install, basta alterar o plugin no arquivo `transferencia-eletronica-api/pom.xml`):
 
@@ -81,7 +84,7 @@ transferencia-eletronica
 		$ mvn clean install
 		$ mvn docker:build --non-recursive
 		# Executando a imagem
-		$ docker run -p 8080:8080 -d transferencia-eletronica/transferencia-eletronica-docker
+		$ mvn docker:run --non-recursive
 		# Para testar se está funcionando
 		$ curl http://localhost:8080/transferencia-eletronica-api/api/public/status	
 		# Front-End - Acesse o navegador e adicione o endereço
@@ -107,4 +110,3 @@ A aplicação além de enviar os logs para o console guarda no diretório
 
 * Para alterações no módulo 'core', é necessário tem executar `mvn install` para que o módulo seja colocado no repositório local;
 * DataSource de desenvolvimento é criado pelo Spring, na classe `ConfiguracaoJPADesenvolvimento.java`, sendo que as informações de conexão são lidas do arquivo `core.properties` do módulo core.
-* Deve-se usar *weblogic/sefa123456* como usuário/senha do domínio local do seu Weblogic!
