@@ -5,12 +5,15 @@ EXPOSE 3306
 
 
 
+
+#docker build -t ubuntu-test:latest -f Dockerfile.custom .
+
 # create a directory on host
-#mkdir /server_data/sonarqube/extensions
-#mkdir /server_data/sonarqube/data # this will be useful in saving startup time
+# mkdir /server_data/sonarqube/extensions
+# mkdir /server_data/sonarqube/data # this will be useful in saving startup time
 
 # Start the container
-#docker run -d \
+# docker run -d \
 #    --name sonarqube \
 #    -p 9000:9000 \
 #    -e SONARQUBE_JDBC_USERNAME=sonar \
