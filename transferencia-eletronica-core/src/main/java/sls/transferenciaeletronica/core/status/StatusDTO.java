@@ -13,21 +13,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class StatusDTO implements Serializable {
 
     private static final long serialVersionUID = -5520555844760498311L;
+    public static final String HTTP_STATUS_OK = "OK";
     private String status;
 
 	@JsonFormat(pattern="dd/MM/yyyy")
-    private Date data;
-    
+    private Date data = new Date();    
     
     public StatusDTO() {}
-    
-    public StatusDTO(String status, Date data) {
-		this.status = status;
-		this.data = data;
-	}
-
+           
     public String getStatus() {
-        return status;
+        return this.status;
     }
 
     public void setStatus(String status) {
@@ -35,10 +30,10 @@ public class StatusDTO implements Serializable {
     }
 
 	public Date getData() {
-		return data;
+		return new Date(this.data.getTime());
 	}
 
 	public void setData(Date data) {
-		this.data = data;
+		this.data = new Date(data.getTime());
 	}
 }

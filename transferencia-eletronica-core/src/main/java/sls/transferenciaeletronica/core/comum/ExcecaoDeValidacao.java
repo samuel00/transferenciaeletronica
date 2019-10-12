@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 public class ExcecaoDeValidacao extends ExcecaoGenerica {
 
     private static final long serialVersionUID = 1L;
-    private final BindingResult bindingResult;
+    private transient final BindingResult bindingResult;
 
     public ExcecaoDeValidacao(BindingResult bindingResult, String mensagem) {
         super(HttpStatus.BAD_REQUEST, mensagem);

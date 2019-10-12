@@ -13,9 +13,11 @@ import sls.transferenciaeletronica.core.comum.BaseRepositorio;
  */
 @Repository
 public class StatusRepositorio extends BaseRepositorio<StatusDTO, Long> {
-    public StatusDTO buscarStatus() {
-        
-        StatusDTO statusDTO = new StatusDTO("OK", new Date());
+	
+    public StatusDTO buscarStatus() {        
+        StatusDTO statusDTO = new StatusDTO();
+        statusDTO.setStatus(StatusDTO.HTTP_STATUS_OK);
+        statusDTO.setData(new Date());
         return statusDTO;
     }
 }

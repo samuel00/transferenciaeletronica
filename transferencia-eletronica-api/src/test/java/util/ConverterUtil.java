@@ -2,7 +2,6 @@ package util;
 
 import java.nio.charset.Charset;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;

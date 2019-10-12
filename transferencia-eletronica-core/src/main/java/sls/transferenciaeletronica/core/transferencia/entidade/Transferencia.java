@@ -1,7 +1,7 @@
 package sls.transferenciaeletronica.core.transferencia.entidade;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,10 +21,10 @@ public class Transferencia {
 	private Long id;
 	
 	@Column(name="data_agendamento")
-	private Date dataAgendamento;
+	private LocalDate dataAgendamento;
 	
 	@Column(name="data_transferencia")
-	private Date dataTransferencia;
+	private LocalDate dataTransferencia;
 	
 	@Column(name="conta_origem")
 	private String contaOrigem;
@@ -42,7 +42,7 @@ public class Transferencia {
 	}
 
 	public Transferencia(TransferenciaDTO transferenciaDTO, Double valorTaxa) {
-		this.dataAgendamento = new Date();
+		this.dataAgendamento = LocalDate.now();
 		this.dataTransferencia = transferenciaDTO.getDataTransferencia();
 		this.status = StatusTransferencia.AGUARDANDO;
 		this.valorTaxa = new BigDecimal(valorTaxa.toString());
@@ -59,20 +59,20 @@ public class Transferencia {
 		this.id = id;
 	}
 
-	public Date getDataAgendamento() {
-		return dataAgendamento;
-	}
-
-	public void setDataAgendamento(Date dataAgendamento) {
-		this.dataAgendamento = dataAgendamento;
-	}
-
-	public Date getDataTransferencia() {
+	public LocalDate getDataTransferencia() {
 		return dataTransferencia;
 	}
 
-	public void setDataTransferencia(Date dataTransferencia) {
+	public void setDataTransferencia(LocalDate dataTransferencia) {
 		this.dataTransferencia = dataTransferencia;
+	}
+
+	public LocalDate getDataAgendamento() {
+		return dataAgendamento;
+	}
+
+	public void setDataAgendamento(LocalDate dataAgendamento) {
+		this.dataAgendamento = dataAgendamento;
 	}
 
 	public String getContaOrigem() {

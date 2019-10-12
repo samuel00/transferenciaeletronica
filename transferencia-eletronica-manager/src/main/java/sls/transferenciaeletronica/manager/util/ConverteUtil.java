@@ -90,7 +90,7 @@ public class ConverteUtil {
 	public static String contextoRequestToString(HttpServletRequest request) {
 		if(request != null)
 			if(!request.getContextPath().equals(STRING_VAZIA)){
-				return request.getContextPath().toString();
+				return request.getContextPath();
 			}
 		return STRING_VAZIA;
 	}

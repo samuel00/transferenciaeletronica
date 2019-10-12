@@ -48,7 +48,7 @@ public class ExtratorUtil {
 	}
 
 	public static String extraiParametros(JoinPoint joinPoint) {
-		String paranetrosDeEntrada = " - ";
+		StringBuffer paranetrosDeEntrada = new StringBuffer(" - ");
 		Object[] args = joinPoint.getArgs();
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getStaticPart().getSignature();
 		Method method = methodSignature.getMethod();
@@ -59,10 +59,10 @@ public class ExtratorUtil {
 				if (!(annotation instanceof RequestParam))
 					continue;
 				RequestParam requestParam = (RequestParam) annotation;
-				paranetrosDeEntrada += requestParam.value() + " = " + args[argIndex] + QUEBRA_LINHA;
+				paranetrosDeEntrada.append(requestParam.value() + " = " + args[argIndex] + QUEBRA_LINHA);
 			}
 		}
-		return paranetrosDeEntrada;
+		return paranetrosDeEntrada.toString();
 	}
 
 }

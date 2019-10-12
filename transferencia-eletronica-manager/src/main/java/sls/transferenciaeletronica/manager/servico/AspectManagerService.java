@@ -36,12 +36,12 @@ public class AspectManagerService {
 	private Erro erro;
 
 	public AspectManagerService() {
+		requisicao = new Requisicao();
+		parametro = new Parametro();
 	}
 
 	public void setParametrosDeEntrada(JoinPoint joinPoint, HttpServletRequest request) {
-		try {
-			requisicao = new Requisicao();
-			parametro = new Parametro();
+		try {			
 			requisicao.setData(Calendar.getInstance());
 			requisicao.setIpOrigem(ConverteUtil.ipRequestToString(request));
 			requisicao.setTipo(request.getMethod());
@@ -51,7 +51,6 @@ public class AspectManagerService {
 			parametro.setEntrada(ConverteUtil.entradaParaString(joinPoint, request));
 			parametro.setMetodoInvocado(joinPoint.getSignature().getName());
 			parametro.setClasseInvocada(joinPoint.getTarget().getClass().getName());
-
 			parametro.setHeader(ConverteUtil.headerRequestToString(request));
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block

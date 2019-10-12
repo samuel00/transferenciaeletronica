@@ -16,9 +16,9 @@ public class TransferenciaUtil {
 
 	public static Double calcularTaxa(TransferenciaDTO transferenciaDTO) {
 		Long diferencaEntreData = calculaDiferencaEntreData(transferenciaDTO.getDataTransferencia());
-		if (diferencaEntreData < ZERO_DIAS)
+		if (diferencaEntreData.compareTo(ZERO_DIAS) < 0)
 			return Taxa.VAZIA.calcular(transferenciaDTO.getValor(), diferencaEntreData);
-		if (diferencaEntreData == ZERO_DIAS)
+		if (diferencaEntreData.compareTo(DEZ_DIAS) == 0)
 			return Taxa.A.calcular(transferenciaDTO.getValor(), diferencaEntreData);
 		if (diferencaEntreData <= DEZ_DIAS)
 			return Taxa.B.calcular(transferenciaDTO.getValor(), diferencaEntreData);
@@ -26,10 +26,9 @@ public class TransferenciaUtil {
 			return Taxa.C.calcular(transferenciaDTO.getValor(), diferencaEntreData);
 	}
 
-	public static Long calculaDiferencaEntreData(Date data) {
-		LocalDate dataAgendamento = data.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	public static Long calculaDiferencaEntreData(LocalDate data) {
 		LocalDate hoje = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
-		Long diferencaEntreData = Duration.between(hoje.atStartOfDay(),dataAgendamento.atStartOfDay()).toDays();
+		Long diferencaEntreData = Duration.between(hoje.atStartOfDay(),data.atStartOfDay()).toDays();
 	    return diferencaEntreData;
 	}
 

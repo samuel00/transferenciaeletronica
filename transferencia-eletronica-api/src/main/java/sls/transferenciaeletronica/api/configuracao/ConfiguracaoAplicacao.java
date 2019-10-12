@@ -23,7 +23,7 @@ public class ConfiguracaoAplicacao {
     final Logger logger = LoggerFactory.getLogger(ConfiguracaoAplicacao.class);
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    public static WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {

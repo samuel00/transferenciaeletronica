@@ -11,6 +11,7 @@ public class HTTPResponse implements Serializable {
     private static final String MENSAGEM_OK = "Requisicao realizada com sucesso!";
     private static final String MENSAGEM_CREATED = "Recurso criado com sucesso!";
     private static final String MENSAGEM_BAD_REQUEST = "Requisicao com má formatação!";
+    private static final String MENSAGEM_UNIDENTIFIED_ERROR = "Erro desconhecido!";
     private static final String MENSAGEM_INTERNAL_SERVER_ERROR = "Erro interno na aplicação!";
 
     private String mensagem;
@@ -40,6 +41,10 @@ public class HTTPResponse implements Serializable {
             case 500:
                 setAtributos(MENSAGEM_INTERNAL_SERVER_ERROR, status, status.value());
                 break;
+            default:
+                setAtributos(MENSAGEM_UNIDENTIFIED_ERROR, status, status.value());
+              	break;
+                	
         }
     }
 

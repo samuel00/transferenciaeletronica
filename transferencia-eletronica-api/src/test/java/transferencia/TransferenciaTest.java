@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -72,7 +72,7 @@ public class TransferenciaTest extends RecursoBaseTest {
 	
 	@Test
 	public void testeTransferenciaTaxaACreated() throws Exception {
-		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, new Date(),CONTA_ORIGEM, CONTA_DESTINO);
+		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, LocalDate.now(), CONTA_ORIGEM, CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso())
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))

@@ -38,11 +38,9 @@ public class TransferenciaRecurso {
         try {
             logger.debug("Transferencia Recebida: {},!", transferenciaDTO);
             if (bindingResult.hasErrors()){
-            	if (bindingResult.hasErrors()) {
                     return new ResponseEntity<HTTPResponse>(new HTTPResponse(bindingResult.getFieldError().getDefaultMessage(),
                             HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
-                }
-            }                
+                }          
             httpResponse = transferenciaServico.criarTransferencia(transferenciaDTO);
             return new ResponseEntity<HTTPResponse>(httpResponse, httpResponse.getStatus());
         } catch (Exception e) {

@@ -1,24 +1,33 @@
 package sls.transferenciaeletronica.core.transferencia.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 public class TransferenciaDTO implements Serializable{
 
 	private static final long serialVersionUID = 8863335127038176340L;
 	
 	@NotNull(message = "{error.data.transeferencia.not.null}")
-	@JsonFormat(pattern="dd/MM/yyyy", timezone = "GMT-3")
-	private Date dataTransferencia;
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate dataTransferencia;
 	
 	@Null(message = "{error.data.agendamento.null}")
 	@JsonFormat(pattern="dd/MM/yyyy")
-	private Date dataAgendamento;
+	private LocalDate dataAgendamento;
 	
 	@NotNull(message = "{error.valor.not.null}")
 	private Double valor;
@@ -35,26 +44,26 @@ public class TransferenciaDTO implements Serializable{
 	public TransferenciaDTO() {
 	}
 
-	public TransferenciaDTO(Double valor, Date dataTransferencia, String contaOrigem, String contaDestino) {
+	public TransferenciaDTO(Double valor, LocalDate dataTransferencia, String contaOrigem, String contaDestino) {
 		this.valor = valor;
 		this.dataTransferencia = dataTransferencia;
 		this.contaOrigem = contaOrigem;
 		this.contaDestino = contaDestino;
 	}	
 
-	public Date getDataTransferencia() {
+	public LocalDate getDataTransferencia() {
 		return dataTransferencia;
 	}
 
-	public void setDataTransferencia(Date dataTransferencia) {
+	public void setDataTransferencia(LocalDate dataTransferencia) {
 		this.dataTransferencia = dataTransferencia;
 	}
 
-	public Date getDataAgendamento() {
+	public LocalDate getDataAgendamento() {
 		return dataAgendamento;
 	}
 
-	public void setDataAgendamento(Date dataAgendamento) {
+	public void setDataAgendamento(LocalDate dataAgendamento) {
 		this.dataAgendamento = dataAgendamento;
 	}
 

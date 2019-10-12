@@ -8,17 +8,17 @@ public class PaginaDeRegistrosDTO<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private ArrayList<T> registros;
+    private ArrayList<T> registros = new ArrayList<>();
 
     /**
      * Configuracao utilizada para buscar essa pagina de registros.
      */
-    private PaginacaoDTO configuracao;
+    private PaginacaoDTO configuracao = new PaginacaoDTO();
 
     /**
      * Total de registros encontrados.
      */
-    private Long total;
+    private Long total = 0L;
 
     public List<Integer> getIntervaloDePaginas() {
 
@@ -64,9 +64,6 @@ public class PaginaDeRegistrosDTO<T> implements Serializable {
     }
 
     public List<T> getRegistros() {
-        if (registros == null) {
-            registros = new ArrayList<>();
-        }
         return registros;
     }
 
