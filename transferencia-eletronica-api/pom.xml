@@ -125,6 +125,7 @@
 					<manifest>
 						<addDefaultImplementationEntries>false</addDefaultImplementationEntries>
 					</manifest>
+<!-- 					<outputDirectory>${project.parent.artifactId}/target</outputDirectory> -->
 				</configuration>
 			</plugin>
 		</plugins>

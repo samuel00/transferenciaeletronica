@@ -14,7 +14,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import sls.transferenciaeletronica.core.configuracao.ConfiguracaoDataSource;
 import sls.transferenciaeletronica.core.configuracao.PropriedadesCore;
-import sls.transferenciaeletronica.manager.configuracao.ConfiguracaoManagerDataSource;
 
 /**
  * Classe que inicializa toda a aplicacao. Devo registrar as classes de
@@ -31,7 +30,6 @@ public class InicializadorAplicacao implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(ConfiguracaoAplicacao.class);
         rootContext.register(ConfiguracaoDataSource.class);
-        rootContext.register(ConfiguracaoManagerDataSource.class);
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
         servletContext.addListener(RequestContextListener.class);

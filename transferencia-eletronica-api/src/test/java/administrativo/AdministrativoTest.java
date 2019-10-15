@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -18,12 +19,13 @@ import org.springframework.web.context.WebApplicationContext;
 
 import configuracao.RecursoBaseTest;
 import sls.transferenciaeletronica.api.configuracao.ConfiguracaoAplicacao;
-import sls.transferenciaeletronica.manager.configuracao.ConfiguracaoManagerDataSourceTest;
+import sls.transferenciaeletronica.core.testes.configuracao.ConfiguracaoJPATeste;
 import util.ConstrutorDeRequisicaoUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ConfiguracaoAplicacao.class, ConfiguracaoManagerDataSourceTest.class})
+@ContextConfiguration(classes = {ConfiguracaoAplicacao.class, ConfiguracaoJPATeste.class})
 @WebAppConfiguration
+@ActiveProfiles("test")
 public class AdministrativoTest  extends RecursoBaseTest {
 	
 	@Autowired

@@ -24,15 +24,15 @@ import org.springframework.web.context.WebApplicationContext;
 
 import configuracao.RecursoBaseTest;
 import sls.transferenciaeletronica.api.configuracao.ConfiguracaoAplicacao;
-import sls.transferenciaeletronica.core.testes.configuracao.ConfiguracaoJPATeste;
 import sls.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
+import sls.transferenciaeletronica.manager.configuracao.ConfiguracaoManagerDataSourceTest;
 import util.ConstrutorDeRequisicaoUtil;
 import util.ConverterUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ConfiguracaoAplicacao.class, ConfiguracaoJPATeste.class})
+@ContextConfiguration(classes = {ConfiguracaoAplicacao.class, ConfiguracaoManagerDataSourceTest.class})
 @WebAppConfiguration
-@ActiveProfiles("test")
+@ActiveProfiles("test")	
 public class TransferenciaTest extends RecursoBaseTest {
 
 	@Autowired
