@@ -18,6 +18,8 @@ locals {
   conn_key = "${file("~/Documentos/curso/udemy/aws/virginia/chave-privada/samuel-pk.pem")}"
 
   key_name = "samuel-pk"
+
+  vpc_security_group_ids = ["sg-0fbc18a05c9a4d620"]
 }
 
 
@@ -25,15 +27,14 @@ resource "aws_instance" "web" {
   ami                    = "${data.aws_ami.ubuntu.id}"
   instance_type          = "${var.instance_type}"
   key_name               = "${local.key_name}"
-  vpc_security_group_ids = ["sg-0fbc18a05c9a4d620"]
-
-
+  vpc_security_group_ids = "${local.vpc_security_group_ids}"
 
   provisioner "file" {
     source      = "script.sh"
     destination = "/tmp/script.sh"
 
     connection {
+      host        = "${self.public_ip}"
       type        = "${local.conn_type}"
       user        = "${local.conn_user}"
       timeout     = "${local.conn_timeout}"
@@ -48,6 +49,7 @@ resource "aws_instance" "web" {
     ]
 
     connection {
+      host        = "${self.public_ip}"
       type        = "${local.conn_type}"
       user        = "${local.conn_user}"
       timeout     = "${local.conn_timeout}"
