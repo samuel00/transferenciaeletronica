@@ -2,9 +2,10 @@
 #Create NetWork
 docker network create --driver overlay samuel-santana-network
 
+#Starting MySQL Like Service
 docker service create --name mysqldb -p 3306:3306 --network samuel-santana-network samuelsantana/mysql
 
-
+#Starting Project Transferencia Eletrônica Like Service
 docker service create --name transferencia-eletronica-docker -p 8080:8080 --network samuel-santana-network samuelsantana/transferencia-eletronica-docker
 
 #Show Docker Swarm Token

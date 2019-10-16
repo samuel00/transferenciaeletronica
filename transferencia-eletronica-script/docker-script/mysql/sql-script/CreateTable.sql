@@ -6,4 +6,4 @@ create table TAB_REQUISICAO_IP_BLOQUEADO (tarib_id bigint not null, tarib_data_i
 
 create table TAB_REQUISICAO_PARAMETRO (tap_id bigint not null auto_increment, tap_classe_invocada varchar(255) not null, tap_entrada longtext not null, tap_header longtext not null, tap_metodo_invocado varchar(255) not null, tap_saida longtext, tap_requisicao_id bigint not null, primary key (tap_id));
 
-create table tab_transferencia (id bigint not null auto_increment, conta_destino varchar(255), conta_origem varchar(255), data_agendamento datetime, data_transferencia datetime, status integer, valor decimal(19,2), valorTaxa decimal(19,2), primary key (id));
+create table tab_transferencia (id bigint not null auto_increment, conta_destino varchar(255), conta_origem varchar(255), data_agendamento tinyblob, data_transferencia tinyblob, status integer, valor decimal(19,2), valorTaxa decimal(19,2), primary key (id))

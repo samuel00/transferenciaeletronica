@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import sls.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
 import sls.transferenciaeletronica.core.transferencia.enuns.StatusTransferencia;
+import sls.transferenciaeletronica.core.transferencia.util.FormatadorUtil;
 
 @Entity
 @Table(name="tab_transferencia")
@@ -42,7 +43,7 @@ public class Transferencia {
 	}
 
 	public Transferencia(TransferenciaDTO transferenciaDTO, Double valorTaxa) {
-		this.dataAgendamento = LocalDate.now();
+		this.dataAgendamento = FormatadorUtil.localdatePadraoBrasil(LocalDate.now());
 		this.dataTransferencia = transferenciaDTO.getDataTransferencia();
 		this.status = StatusTransferencia.AGUARDANDO;
 		this.valorTaxa = new BigDecimal(valorTaxa.toString());

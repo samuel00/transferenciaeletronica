@@ -1,7 +1,7 @@
 FROM sonarqube
 
 
-EXPOSE 3306
+EXPOSE 9000
 
 
 
