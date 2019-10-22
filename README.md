@@ -51,8 +51,7 @@ transferencia-eletronica
 |   |	 ├── script.sh
 |   |	 └── variable.tf
 ├── README.md
-└── Dockerfile
-└── Dockerfile.MySQL
+├── Dockerfile
 └── pom.xml
 
 ```
