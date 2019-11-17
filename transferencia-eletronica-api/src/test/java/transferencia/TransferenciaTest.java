@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -78,7 +79,7 @@ public class TransferenciaTest extends RecursoBaseTest {
 		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
 		.andDo(print())
 		.andExpect(status().isCreated())
-		.andExpect(jsonPath("$.status", is("CREATED")))
+		.andExpect(jsonPath("$.httpStatus", is(HttpStatus.CREATED.value())))
 		.andReturn();
 	}
 	
@@ -89,7 +90,7 @@ public class TransferenciaTest extends RecursoBaseTest {
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
 		.andExpect(status().isCreated())
-		.andExpect(jsonPath("$.status", is("CREATED")))
+		.andExpect(jsonPath("$.httpStatus", is(HttpStatus.CREATED.value())))
 		.andReturn();
 	}
 	
@@ -100,7 +101,7 @@ public class TransferenciaTest extends RecursoBaseTest {
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
 		.andExpect(status().isCreated())
-		.andExpect(jsonPath("$.status", is("CREATED")))
+		.andExpect(jsonPath("$.httpStatus", is(HttpStatus.CREATED.value())))
 		.andReturn();
 	}
 	
@@ -111,7 +112,7 @@ public class TransferenciaTest extends RecursoBaseTest {
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
 		.andExpect(status().isBadRequest())
-		.andExpect(jsonPath("$.status", is("BAD_REQUEST")))
+		.andExpect(jsonPath("$.httpStatus", is("BAD_REQUEST")))
 		.andReturn();
 	}
 	

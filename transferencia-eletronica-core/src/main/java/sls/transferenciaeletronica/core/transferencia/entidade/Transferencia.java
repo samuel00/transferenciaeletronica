@@ -9,9 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import sls.transferenciaeletronica.core.comum.ExcecaoDeNegocio;
+import sls.transferenciaeletronica.core.comum.MensagemUtils;
+import sls.transferenciaeletronica.core.comum.OcorrenciaExcecao;
 import sls.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
+import sls.transferenciaeletronica.core.transferencia.enuns.MotivoErro;
 import sls.transferenciaeletronica.core.transferencia.enuns.StatusTransferencia;
 import sls.transferenciaeletronica.core.transferencia.util.FormatadorUtil;
+import sls.transferenciaeletronica.core.transferencia.util.TransferenciaUtil;
 
 @Entity
 @Table(name="tab_transferencia")
@@ -42,14 +47,20 @@ public class Transferencia {
 	public Transferencia() {
 	}
 
-	public Transferencia(TransferenciaDTO transferenciaDTO, Double valorTaxa) {
-		this.dataAgendamento = FormatadorUtil.localdatePadraoBrasil(LocalDate.now());
-		this.dataTransferencia = transferenciaDTO.getDataTransferencia();
-		this.status = StatusTransferencia.AGUARDANDO;
-		this.valorTaxa = new BigDecimal(valorTaxa.toString());
-		this.valor = new BigDecimal(transferenciaDTO.getValor().toString());
-		this.contaDestino = transferenciaDTO.getContaDestino();
-		this.contaOrigem = transferenciaDTO.getContaOrigem();
+	public Transferencia(TransferenciaDTO transferenciaDTO) throws OcorrenciaExcecao {
+		setDataAgendamento(FormatadorUtil.localdatePadraoBrasil(LocalDate.now()));
+		setDataTransferencia(transferenciaDTO.getDataTransferencia());
+		setStatus(StatusTransferencia.AGUARDANDO);
+		setValorTaxa(transferenciaDTO);
+		setValor(new BigDecimal(transferenciaDTO.getValor().toString()));
+		setContaDestino(transferenciaDTO.getContaDestino());
+		setContaOrigem(transferenciaDTO.getContaOrigem());
+	}
+
+	private void setValorTaxa(TransferenciaDTO transferenciaDTO) throws OcorrenciaExcecao {
+		this.valorTaxa = BigDecimal.valueOf(
+				TransferenciaUtil.calcularTaxa(transferenciaDTO)
+				.orElseThrow(()-> new ExcecaoDeNegocio(MotivoErro.SEM_TAXA, MensagemUtils.getMensagenSemTaxa())));		
 	}
 
 	public Long getId() {
@@ -102,10 +113,6 @@ public class Transferencia {
 
 	public BigDecimal getValorTaxa() {
 		return valorTaxa;
-	}
-
-	public void setValorTaxa(BigDecimal valorTaxa) {
-		this.valorTaxa = valorTaxa;
 	}
 
 	public StatusTransferencia getStatus() {

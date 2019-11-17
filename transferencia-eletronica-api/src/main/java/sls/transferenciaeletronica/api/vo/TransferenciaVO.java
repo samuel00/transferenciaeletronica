@@ -15,7 +15,17 @@ public class TransferenciaVO extends PadraoVO{
 	
 	private List<TransferenciaDTO>  transferencias = new ArrayList<>();
 	
-	public TransferenciaVO() {
+	private TransferenciaDTO transferencia = new TransferenciaDTO();
+	
+	public TransferenciaVO() {}
+	
+	public TransferenciaVO(TransferenciaDTO transferenciaDTO) {
+		this.transferencia.setContaDestino(transferenciaDTO.getContaDestino());
+		this.transferencia.setContaOrigem(transferenciaDTO.getContaOrigem());
+		this.transferencia.setValor(transferenciaDTO.getValor().doubleValue());
+		this.transferencia.setValorTaxa(transferenciaDTO.getValorTaxa().doubleValue());
+		this.transferencia.setDataTransferencia(transferenciaDTO.getDataTransferencia());
+		this.transferencia.setDataAgendamento(transferenciaDTO.getDataAgendamento());
 	}
 	
 	public TransferenciaVO(List<Transferencia> transferencias) {

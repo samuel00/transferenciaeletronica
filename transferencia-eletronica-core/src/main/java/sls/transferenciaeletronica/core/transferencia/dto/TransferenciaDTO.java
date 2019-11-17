@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
+import sls.transferenciaeletronica.core.transferencia.entidade.Transferencia;
+
 public class TransferenciaDTO implements Serializable{
 
 	private static final long serialVersionUID = 8863335127038176340L;
@@ -49,6 +51,14 @@ public class TransferenciaDTO implements Serializable{
 		this.dataTransferencia = dataTransferencia;
 		this.contaOrigem = contaOrigem;
 		this.contaDestino = contaDestino;
+	}	
+	
+	public TransferenciaDTO(Transferencia transferencia) {
+		this.valor = transferencia.getValor().doubleValue();
+		this.valorTaxa = transferencia.getValorTaxa().doubleValue();
+		this.dataTransferencia = transferencia.getDataTransferencia();
+		this.contaOrigem = transferencia.getContaOrigem();
+		this.contaDestino = transferencia.getContaDestino();
 	}	
 
 	public LocalDate getDataTransferencia() {

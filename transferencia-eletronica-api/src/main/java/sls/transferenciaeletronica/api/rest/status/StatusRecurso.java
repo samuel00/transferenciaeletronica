@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import sls.transferenciaeletronica.api.vo.StatusVO;
 import sls.transferenciaeletronica.core.comum.ExcecaoGenerica;
 import sls.transferenciaeletronica.core.configuracao.PropriedadesCore;
-import sls.transferenciaeletronica.core.status.StatusDTO;
 import sls.transferenciaeletronica.core.status.StatusServico;
 
 /**
@@ -35,10 +35,10 @@ public class StatusRecurso {
     }
 
     @RequestMapping(value = "/status", method = RequestMethod.GET, produces = { "application/json" })
-    public ResponseEntity<StatusDTO> buscarStatus() throws ExcecaoGenerica {
+    public ResponseEntity<?> buscarStatus() throws ExcecaoGenerica {
         try {
-            StatusDTO statusDTO = statusServico.obterStatus();
-            return new ResponseEntity<StatusDTO>(statusDTO, HttpStatus.OK);
+            StatusVO statusVO = new StatusVO(statusServico.obterStatus());
+            return new ResponseEntity<StatusVO>(statusVO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(String.format("Serviço %s nao disponível", PropriedadesCore.getProjeto()), e);
             throw new ExcecaoGenerica(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());

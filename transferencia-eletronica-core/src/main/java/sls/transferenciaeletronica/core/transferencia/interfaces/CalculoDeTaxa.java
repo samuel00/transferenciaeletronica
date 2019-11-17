@@ -1,6 +1,8 @@
 package sls.transferenciaeletronica.core.transferencia.interfaces;
 
+import java.util.Optional;
+
 public interface CalculoDeTaxa {
 	
-	public Double calcular(Double valor, Long quantidadeDeDias);
+	public Optional<Double> calcularValor(Double valor, Long quantidadeDeDias);
 }

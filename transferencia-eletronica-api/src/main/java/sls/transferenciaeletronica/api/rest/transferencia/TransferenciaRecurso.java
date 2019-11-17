@@ -18,6 +18,7 @@ import sls.transferenciaeletronica.api.vo.TransferenciaVO;
 import sls.transferenciaeletronica.core.comum.ExcecaoDeValidacao;
 import sls.transferenciaeletronica.core.comum.ExcecaoGenerica;
 import sls.transferenciaeletronica.core.comum.HTTPResponse;
+import sls.transferenciaeletronica.core.comum.OcorrenciaExcecao;
 import sls.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
 import sls.transferenciaeletronica.core.transferencia.servico.TransferenciaServico;
 
@@ -34,7 +35,7 @@ public class TransferenciaRecurso {
 
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
 	public ResponseEntity<?> criarAgendamento(@Valid @RequestBody TransferenciaDTO transferenciaDTO,
-			BindingResult bindingResult, HttpServletRequest httpServletRequest) throws ExcecaoGenerica {
+			BindingResult bindingResult, HttpServletRequest request) throws OcorrenciaExcecao {
 		try {
 			logger.debug("Transferencia Recebida: {},!", transferenciaDTO);
 			if (bindingResult.hasErrors()) {
@@ -43,10 +44,12 @@ public class TransferenciaRecurso {
 								HttpStatus.BAD_REQUEST.value()),
 						HttpStatus.BAD_REQUEST);
 			}
-			httpResponse = transferenciaServico.criarTransferencia(transferenciaDTO);
-			return new ResponseEntity<HTTPResponse>(httpResponse, httpResponse.getStatus());
-		} catch (Exception e) {
-			throw new ExcecaoGenerica(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+			TransferenciaVO resposta = new TransferenciaVO(transferenciaServico.criarTransferencia(transferenciaDTO));
+			resposta.setHttpStatus(HttpStatus.CREATED.value());
+			resposta.setUrl(request.getRequestURI());
+			return new ResponseEntity<>(resposta, HttpStatus.CREATED);
+		} catch (OcorrenciaExcecao ocorrenciaExcecao) {
+			return new ResponseEntity<>(ocorrenciaExcecao, ocorrenciaExcecao.getHttpStatus());
 		}
 	}
 

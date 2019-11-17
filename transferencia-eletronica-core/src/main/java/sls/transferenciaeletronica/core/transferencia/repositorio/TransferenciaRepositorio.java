@@ -8,7 +8,7 @@ import sls.transferenciaeletronica.core.comum.BaseRepositorio;
 import sls.transferenciaeletronica.core.transferencia.entidade.Transferencia;
 
 @Repository
-public class TransferenciaRepositorio extends BaseRepositorio<Object, Long>{
+public class TransferenciaRepositorio extends BaseRepositorio<Transferencia, Long>{
 
 	@SuppressWarnings("unchecked")
 	public List<Transferencia> getAgendamentos() {
