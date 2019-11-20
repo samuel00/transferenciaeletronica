@@ -43,7 +43,7 @@
 		<docker.image.prefix>${docker.username}</docker.image.prefix>
 
 		<!--nome da imagem do projeto docker hub -->
-		<docker.image.name>${project.artifactId}-docker</docker.image.name>
+		<docker.image.name>transferencia-eletronica-docker</docker.image.name>
 
 		<sonar.sources>src/main</sonar.sources>
 		<sonar.tests>src/test</sonar.tests>
@@ -158,8 +158,7 @@
 			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.20.0</version>
-				<inherited>false</inherited>
+				<version>0.25.2</version>
 
 				<configuration>
 
@@ -232,7 +231,7 @@
 							</run>
 						</image>
 					</images>
-				</configuration>
+				</configuration>				
 			</plugin>
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
@@ -303,6 +302,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			
 		</plugins>
 	</build>
 </project>

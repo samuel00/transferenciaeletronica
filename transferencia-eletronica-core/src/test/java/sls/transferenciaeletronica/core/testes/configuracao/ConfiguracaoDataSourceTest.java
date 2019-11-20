@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-public class ConfiguracaoJPATeste {
+public class ConfiguracaoDataSourceTest {
 
 	@Bean
 	@Profile("test")

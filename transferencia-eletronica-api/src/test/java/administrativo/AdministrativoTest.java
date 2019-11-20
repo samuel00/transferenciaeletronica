@@ -19,11 +19,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import configuracao.RecursoBaseTest;
 import sls.transferenciaeletronica.api.configuracao.ConfiguracaoAplicacao;
-import sls.transferenciaeletronica.core.testes.configuracao.ConfiguracaoJPATeste;
+import sls.transferenciaeletronica.core.testes.configuracao.ConfiguracaoDataSourceTest;
 import util.ConstrutorDeRequisicaoUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ConfiguracaoAplicacao.class, ConfiguracaoJPATeste.class})
+@ContextConfiguration(classes = {ConfiguracaoAplicacao.class, ConfiguracaoDataSourceTest.class})
 @WebAppConfiguration
 @ActiveProfiles("test")
 public class AdministrativoTest  extends RecursoBaseTest {

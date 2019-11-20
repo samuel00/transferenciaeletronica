@@ -1,21 +1,26 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>sls</groupId>
-        <artifactId>transferencia-eletronica</artifactId>
-        <version>1.1</version>
-   		<relativePath>../pom.xml</relativePath>        
-    </parent>
-    <artifactId>transferencia-eletronica-extranet-ui</artifactId>
-    <packaging>war</packaging>
-    <name>transferencia-eletronica-extranet-ui</name>
-    <description>Projeto que contem os arquivos estaticos (HTML, CSS e JavaScript) com a view do projeto.</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>sls</groupId>
+		<artifactId>transferencia-eletronica</artifactId>
+		<version>1.1</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>transferencia-eletronica-extranet-ui</artifactId>
+	<packaging>war</packaging>
+	<name>transferencia-eletronica-extranet-ui</name>
+	<description>Projeto que contem os arquivos estaticos (HTML, CSS e JavaScript) com a view do projeto.</description>
 
 	<build>
-	<finalName>${project.artifactId}</finalName>
+		<finalName>${project.artifactId}</finalName>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>io.fabric8</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
