@@ -24,9 +24,9 @@
 		<liquibase.db.driver>oracle.jdbc.OracleDriver</liquibase.db.driver>
 		<liquibase.default.schema.name>TEMPLATE_WEB</liquibase.default.schema.name>
 
-		<spring.version>4.2.2.RELEASE</spring.version>
-		<hibernate.version>4.2.19.Final</hibernate.version>
-		<hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
+		<spring.version>5.2.4.RELEASE</spring.version>
+		<hibernate.version>5.4.14.Final</hibernate.version>
+		<hibernate.validator.version>6.1.2.Final</hibernate.validator.version>
 		<slf4j.version>1.7.21</slf4j.version>
 		<spring.data.version>1.10.1.RELEASE</spring.data.version>
 		<liquibase.version>3.4.0</liquibase.version>
@@ -301,6 +301,16 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.openejb.maven</groupId>
+				<artifactId>tomee-maven-plugin</artifactId>
+				<version>1.7.1</version>
+				<configuration>
+					<tomeeVersion>1.7.1</tomeeVersion>
+					<tomeeClassifier>plus</tomeeClassifier>
+				</configuration>
 			</plugin>
 			
 		</plugins>

@@ -21,48 +21,43 @@ import sls.transferenciaeletronica.core.comum.HTTPResponse;
 import sls.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
 import sls.transferenciaeletronica.core.transferencia.servico.TransferenciaServico;
 
-@RestController
-@RequestMapping("/transferencia")
-public class TransferenciaRecurso {
+@RestController @RequestMapping("/transferencia") public class TransferenciaRecurso {
 
-	private static final Logger logger = LoggerFactory.getLogger(TransferenciaRecurso.class);
+    private static final Logger logger = LoggerFactory.getLogger(TransferenciaRecurso.class);
 
-	@Autowired
-	private TransferenciaServico transferenciaServico;
+    @Autowired private TransferenciaServico transferenciaServico;
 
-	private HTTPResponse httpResponse;
+    private HTTPResponse httpResponse;
 
-	@RequestMapping(value = "", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
-	public ResponseEntity<?> criarAgendamento(@Valid @RequestBody TransferenciaDTO transferenciaDTO,
-			BindingResult bindingResult, HttpServletRequest httpServletRequest) throws ExcecaoGenerica {
-		try {
-			logger.debug("Transferencia Recebida: {},!", transferenciaDTO);
-			if (bindingResult.hasErrors()) {
-				return new ResponseEntity<HTTPResponse>(
-						new HTTPResponse(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST,
-								HttpStatus.BAD_REQUEST.value()),
-						HttpStatus.BAD_REQUEST);
-			}
-			httpResponse = transferenciaServico.criarTransferencia(transferenciaDTO);
-			return new ResponseEntity<HTTPResponse>(httpResponse, httpResponse.getStatus());
-		} catch (Exception e) {
-			throw new ExcecaoGenerica(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-		}
+    @RequestMapping(value = "", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    public ResponseEntity<?> criarAgendamento(@Valid @RequestBody TransferenciaDTO transferenciaDTO,
+                                              BindingResult bindingResult, HttpServletRequest httpServletRequest) throws ExcecaoGenerica {
+	try {
+	    logger.debug("Transferencia Recebida: {},!", transferenciaDTO);
+	    if (bindingResult.hasErrors()) {
+		return new ResponseEntity<HTTPResponse>(
+				new HTTPResponse(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST,
+				                 HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+	    }
+	    httpResponse = transferenciaServico.criarTransferencia(transferenciaDTO);
+	    return new ResponseEntity<HTTPResponse>(httpResponse, httpResponse.getStatus());
+	} catch (Exception e) {
+	    System.out.println(e);
+	    throw new ExcecaoGenerica(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 	}
+    }
 
-	@RequestMapping(value = "", method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
-	public ResponseEntity<?> recuperarAgendamentos(HttpServletRequest request)
-			throws ExcecaoDeValidacao, ExcecaoGenerica {
-		logger.debug("Consulta Agendamento");
-		try {
-			TransferenciaVO resposta = new TransferenciaVO(transferenciaServico.getAgendamentos());
-			resposta.setHttpStatus(HttpStatus.OK.value());
-			resposta.setUrl(request.getRequestURI());
-			return new ResponseEntity<>(resposta, HttpStatus.OK);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ExcecaoGenerica(HttpStatus.INTERNAL_SERVER_ERROR,
-					"Erro ao consultar informacoes. Tente novamente mais tarde.");
-		}
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public ResponseEntity<?> recuperarAgendamentos(HttpServletRequest request) throws ExcecaoDeValidacao, ExcecaoGenerica {
+	logger.debug("Consulta Agendamento");
+	try {
+	    TransferenciaVO resposta = new TransferenciaVO(transferenciaServico.getAgendamentos());
+	    resposta.setHttpStatus(HttpStatus.OK.value());
+	    resposta.setUrl(request.getRequestURI());
+	    return new ResponseEntity<>(resposta, HttpStatus.OK);
+	} catch (Exception e) {
+	    logger.error(e.getMessage(), e);
+	    throw new ExcecaoGenerica(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao consultar informacoes. Tente novamente mais tarde.");
 	}
+    }
 }
