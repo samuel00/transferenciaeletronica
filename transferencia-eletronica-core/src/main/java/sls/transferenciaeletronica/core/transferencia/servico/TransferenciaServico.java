@@ -24,9 +24,9 @@ public class TransferenciaServico {
 	@Autowired
 	private TransferenciaRepositorio transferenciaRepositorio;
 
-	@Autowired
-	private KafkaComponent kafkaComponent;
-
+	/*
+	 * @Autowired private KafkaComponent kafkaComponent;
+	 */
     @Transactional
     public HTTPResponse criarTransferencia(TransferenciaDTO transferenciaDTO) {
 	Double valorTaxa = TransferenciaUtil.calcularTaxa(transferenciaDTO);
@@ -35,7 +35,7 @@ public class TransferenciaServico {
 	    log.debug("Salvando valor {}", transferencia);
 	    Transferencia transferenciaDB = (Transferencia)this.transferenciaRepositorio.salvar(transferencia);
 	    log.debug("Enviando valor {}", transferencia);
-	    this.kafkaComponent.enviaTransferenciaEvento(transferenciaDB);
+	    //this.kafkaComponent.enviaTransferenciaEvento(transferenciaDB);
 	    return new HTTPResponse(HttpStatus.CREATED);
 	}
 	return new HTTPResponse(MensagemUtils.getMensagenSemTaxa(), HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value());

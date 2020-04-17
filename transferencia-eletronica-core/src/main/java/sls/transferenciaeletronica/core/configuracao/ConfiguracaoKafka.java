@@ -20,41 +20,32 @@ import org.springframework.kafka.core.ProducerFactory;
 public class ConfiguracaoKafka {
 
 
-    @Value("${spring.kafka.producer.bootstrap-server}")
-    private String bootstrapServers;
-
-    @Bean
-    public NewTopic transferenciaEvents(){
-	return TopicBuilder.name("transfer-events")
-			.partitions(3)
-			.replicas(3)
-			.build();
-    }
-
-    @Bean
-    public Map<String, Object> producerConfigs() {
-	Map<String, Object> props = new HashMap<>();
-	props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9093,localhost:9094");
-	props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-	props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-
-	return props;
-    }
-    
-    @Bean
-    public KafkaAdmin admin() {
-        Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9093,localhost:9094");
-        return new KafkaAdmin(configs);
-    }
-
-    @Bean
-    public ProducerFactory<String, String> producerFactory() {
-	return new DefaultKafkaProducerFactory<>(producerConfigs());
-    }
-
-    @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-	return new KafkaTemplate<>(producerFactory());
-    }
+	/*
+	 * @Value("${spring.kafka.producer.bootstrap-server}") private String
+	 * bootstrapServers;
+	 * 
+	 * @Bean public NewTopic transferenciaEvents(){ return
+	 * TopicBuilder.name("transfer-events") .partitions(3) .replicas(3) .build(); }
+	 * 
+	 * @Bean public Map<String, Object> producerConfigs() { Map<String, Object>
+	 * props = new HashMap<>(); props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+	 * "localhost:9092,localhost:9093,localhost:9094");
+	 * props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+	 * StringSerializer.class);
+	 * props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+	 * StringSerializer.class);
+	 * 
+	 * return props; }
+	 * 
+	 * @Bean public KafkaAdmin admin() { Map<String, Object> configs = new
+	 * HashMap<>(); configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG,
+	 * "localhost:9092,localhost:9093,localhost:9094"); return new
+	 * KafkaAdmin(configs); }
+	 * 
+	 * @Bean public ProducerFactory<String, String> producerFactory() { return new
+	 * DefaultKafkaProducerFactory<>(producerConfigs()); }
+	 * 
+	 * @Bean public KafkaTemplate<String, String> kafkaTemplate() { return new
+	 * KafkaTemplate<>(producerFactory()); }
+	 */
 }
