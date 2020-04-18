@@ -11,10 +11,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,18 +27,22 @@ import org.springframework.web.context.WebApplicationContext;
 import configuracao.RecursoBaseTest;
 import sls.transferenciaeletronica.api.configuracao.ConfiguracaoAplicacao;
 import sls.transferenciaeletronica.core.testes.configuracao.ConfiguracaoDataSourceTest;
+import sls.transferenciaeletronica.core.testes.configuracao.ConfiguracaoKafkaTest;
 import sls.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
 import util.ConstrutorDeRequisicaoUtil;
 import util.ConverterUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ConfiguracaoAplicacao.class, ConfiguracaoDataSourceTest.class})
+@ContextConfiguration(classes = {ConfiguracaoAplicacao.class, ConfiguracaoDataSourceTest.class, ConfiguracaoKafkaTest.class})
 @WebAppConfiguration
 @ActiveProfiles("test")	
 public class TransferenciaTest extends RecursoBaseTest {
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
+	
+	@ClassRule
+	public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(1, true, "transfer-events-test");
 
 	@Before
 	public void setup() throws Exception {

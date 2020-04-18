@@ -20,24 +20,26 @@ import java.util.List;
 @Slf4j
 public class KafkaComponent {
 
-	/*
-	 * @Autowired private KafkaTemplate<String, String> kafkaTemplate;
-	 * 
-	 * private final String TOPIC = "transfer-events";
-	 * 
-	 * public void enviaTransferenciaEvento(Transferencia transferencia) { try {
-	 * String key = transferencia.getId().toString(); String value = new
-	 * ObjectMapper().writeValueAsString(transferencia); ProducerRecord<String,
-	 * String> producerRecord = buildProducerRecord(key, value, TOPIC);
-	 * ListenableFuture<SendResult<String, String>> listenableFuture =
-	 * this.kafkaTemplate.send(producerRecord); listenableFuture.addCallback(new
-	 * PostEnvioMensagem(key, value)); } catch (JsonProcessingException e) {
-	 * log.error("Erro conversao de json {} ", e.getCause()); } }
-	 * 
-	 * private ProducerRecord<String, String> buildProducerRecord(String key, String
-	 * value, String topic) { List<Header> recordHeaders = Arrays.asList(new
-	 * RecordHeader("event-source", "scanner".getBytes())); return new
-	 * ProducerRecord<>(topic, null, key, value, recordHeaders); }
-	 */
+	@Autowired
+	private KafkaTemplate<String, String> kafkaTemplate;
+
+	private final String TOPIC = "transfer-events";
+
+	public void enviaTransferenciaEvento(Transferencia transferencia) {
+		try {
+			String key = transferencia.getId().toString();
+			String value = new ObjectMapper().writeValueAsString(transferencia);
+			ProducerRecord<String, String> producerRecord = buildProducerRecord(key, value, TOPIC);
+			ListenableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate.send(producerRecord);
+			listenableFuture.addCallback(new PostEnvioMensagem(key, value));
+		} catch (JsonProcessingException e) {
+			log.error("Erro conversao de json {} ", e.getCause());
+		}
+	}
+
+	private ProducerRecord<String, String> buildProducerRecord(String key, String value, String topic) {
+		List<Header> recordHeaders = Arrays.asList(new RecordHeader("event-source", "scanner".getBytes()));
+		return new ProducerRecord<>(topic, null, key, value, recordHeaders);
+	}
 
 }
