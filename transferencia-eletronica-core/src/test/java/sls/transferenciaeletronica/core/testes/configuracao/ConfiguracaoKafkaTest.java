@@ -20,18 +20,20 @@ import org.springframework.kafka.core.ProducerFactory;
 public class ConfiguracaoKafkaTest {
 	
 	@Value("${spring.embedded.kafka.brokers}")
-	private String bootstrapServers;
+	public String bootstrapServers;
 	
 	
 	@Bean
 	public Map<String, Object> producerConfigs() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrapServers);
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
 		return props;
 	}
+	
+	
 
 	@Bean
 	public KafkaAdmin admin() {
