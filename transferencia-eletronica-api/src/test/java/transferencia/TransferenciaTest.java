@@ -51,7 +51,7 @@ public class TransferenciaTest extends RecursoBaseTest {
 	private WebApplicationContext webApplicationContext;
 
 	@ClassRule
-	public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(1, true, "transfer-events");
+	public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(3, true, "transfer-events");
 	
 	private Consumer<String , String> consumer;
 	
