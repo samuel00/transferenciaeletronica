@@ -10,12 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import sls.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
 import sls.transferenciaeletronica.core.transferencia.enuns.StatusTransferencia;
 import sls.transferenciaeletronica.core.transferencia.util.FormatadorUtil;
 
 @Entity
 @Table(name="tab_transferencia")
+@AllArgsConstructor
+@Builder
 public class Transferencia {
 	
 	@Id

@@ -35,7 +35,7 @@ public class TransferenciaServico {
 			Transferencia transferencia = new Transferencia(transferenciaDTO, valorTaxa);
 			log.debug("Salvando valor {}", transferencia);
 			Transferencia transferenciaDB = (Transferencia) this.transferenciaRepositorio.salvar(transferencia);
-			log.debug("Enviando valor {}", transferencia);
+			log.debug("Enviando valor {}", transferenciaDB);
 			this.kafkaComponent.enviaTransferenciaEvento(transferenciaDB);
 			return new HTTPResponse(HttpStatus.CREATED);
 		}

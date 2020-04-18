@@ -45,13 +45,13 @@ import util.ConverterUtil;
 		ConfiguracaoKafkaTest.class })
 @WebAppConfiguration
 @ActiveProfiles("test")
-public class TransferenciaTest extends RecursoBaseTest {
+public class TransferenciaIntegrationTest extends RecursoBaseTest {
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
 	@ClassRule
-	public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(3, true, "transfer-events");
+	public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(1, true, "transfer-events");
 	
 	private Consumer<String , String> consumer;
 	
@@ -77,9 +77,11 @@ public class TransferenciaTest extends RecursoBaseTest {
 	@Test
 	public void testeTransferenciaBadRequestValor() throws Exception {
 		TransferenciaDTO transferencia = new TransferenciaDTO();
-		mockMvc.perform(post(getRecurso()).contentType(MediaType.APPLICATION_JSON)
-				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia))).andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.status", is("BAD_REQUEST"))).andReturn();
+		mockMvc.perform(post(getRecurso())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia)))
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.status", is("BAD_REQUEST"))).andReturn();
 	}
 
 	@Test
