@@ -89,26 +89,21 @@ transferencia-eletronica
 
 ## Subindo a aplicação
 
-1. Após **clonar** o repositório na sua máquina, entre no diretório do projeto e mude para a branch de desenvolvimento **(se já não estiver nela)**:
-
-        $ git branch docker-with-fabric8-io origin/desenvolvimento (caso a branch não exista localmente)
-        $ git checkout docker-with-fabric8-io
-
-2. Baixando as dependências, executanto os testes e subindo no Jetty (caso queira desabilitar o start do Jetty após o install, basta alterar o plugin no arquivo `transferencia-eletronica-api/pom.xml`):
+1. Baixando as dependências, executanto os testes e subindo no Jetty (caso queira desabilitar o start do Jetty após o install, basta alterar o plugin no arquivo `transferencia-eletronica-api/pom.xml`):
 
         $ mvn clean install
         Acesse http://localhost:9091/transferencia-eletronica-api/
         Acesse http://localhost:9091/transferencia-eletronica-ui/#
 
-3. Configurando para o Eclipse, execute dentro do diretório do projeto
+2. Configurando para o Eclipse, execute dentro do diretório do projeto
 
         Basta importar o projeto como **Maven Project**.
 
-4. Informações para criação dos DataSource se encontram no arquivo `core.properties`.
+3. Informações para criação dos DataSource se encontram no arquivo `core.properties`.
 
-5. Excutando o projeto
+4. Excutando o projeto
 
-	5.1 Com Fabric8 io:
+	4.1 Com Fabric8 io:
 
 		# Construindo Imagem
 		$ mvn clean install
@@ -121,7 +116,7 @@ transferencia-eletronica
 		  http://localhost:8080/transferencia-eletronica-extranet-ui/#/transferencia
 
 		  
-	5.2 Com Terraform io (Necessário uma conta na AWS):
+	4.2 Com Terraform io (Necessário uma conta na AWS):
 
 		# Navegando até o diretório
 		$ cd transferencia-eletronica-script/terraform-script/
@@ -137,17 +132,17 @@ transferencia-eletronica
 		ex: ip.publico.na.aws:8080/transferencia-eletronica-extranet-ui/
 
 
-    5.3 API no Weblogic:
+    4.3 API no Weblogic:
 
         $ cd transferencia-eletronica-api
         $ mvn clean package wls:deploy
         Acesse http://localhost:7001/transferencia-eletronica-api/
 
-    5.4 UI é constituído por HTML, JS e CSS, basta colocar como um diretório no Weblogic, Apache ou um Servlet Conatainer, como o Jetty.
+    4.4 UI é constituído por HTML, JS e CSS, basta colocar como um diretório no Weblogic, Apache ou um Servlet Conatainer, como o Jetty.
 
         $ Acesse http://{servidor}:{porta}/transferencia-eletronica-ui/#
 
-6. Logs
+5. Logs
 A aplicação além de enviar os logs para o console guarda no diretório 
 
         /u02/logs/transferencia-eletronica/transferencia-eletronica.log
