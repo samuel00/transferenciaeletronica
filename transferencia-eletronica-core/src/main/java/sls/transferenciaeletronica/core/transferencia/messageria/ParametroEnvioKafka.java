@@ -2,6 +2,9 @@ package sls.transferenciaeletronica.core.transferencia.messageria;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +26,10 @@ public class ParametroEnvioKafka {
 	
 	public ParametroEnvioKafka comValue(Transferencia value) {
 		try {
-			this.value = new ObjectMapper().writeValueAsString(value);
+			this.value = new ObjectMapper().registerModule(new ParameterNamesModule())
+		            .registerModule(new Jdk8Module())
+		            .registerModule(new JavaTimeModule())
+		            .writeValueAsString(value);
 		} catch (JsonProcessingException e) {
 			log.error("Erro conversao de json {} ", e.getCause());
 		}

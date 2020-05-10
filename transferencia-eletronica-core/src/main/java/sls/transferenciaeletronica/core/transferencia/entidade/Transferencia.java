@@ -1,5 +1,6 @@
 package sls.transferenciaeletronica.core.transferencia.entidade;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,16 +23,23 @@ import sls.transferenciaeletronica.core.transferencia.util.FormatadorUtil;
 @Table(name="tab_transferencia")
 @AllArgsConstructor
 @Builder
-public class Transferencia {
+public class Transferencia implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3083637479133171609L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name="data_agendamento")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataAgendamento;
 	
 	@Column(name="data_transferencia")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataTransferencia;
 	
 	@Column(name="conta_origem")

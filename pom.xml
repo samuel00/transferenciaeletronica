@@ -80,9 +80,17 @@
 				<build.profile.id>producao</build.profile.id>
 			</properties>
 		</profile>
-		<!-- <profile> <id>local</id> <properties> <liquibase.db.conn.string>jdbc:oracle:thin:@localhost:1522:xe</liquibase.db.conn.string> 
-			<liquibase.db.user>ATUALIZADOR</liquibase.db.user> <liquibase.db.password>123456</liquibase.db.password> 
-			</properties> </profile> -->
+		<profile>
+			<id>docker</id>
+			<properties>
+				<build.profile.id>docker</build.profile.id>
+			</properties>
+			<build>
+				<plugins>
+
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<build>
@@ -104,6 +112,122 @@
 					<excludes>
 						<exclude>${surefire.exclude.testes.integracao}</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.25.2</version>
+
+				<configuration>
+
+					<!--<dockerHost>http://127.0.0.1:2375</dockerHost> -->
+					<dockerHost>unix:///var/run/docker.sock</dockerHost>
+
+					<verbose>true</verbose>
+					<images>
+						<image>
+							<name>${docker.image.prefix}/${docker.image.name}</name>
+							<build>
+								<dockerFileDir>${project.basedir}</dockerFileDir>
+
+								<assembly>
+									<descriptorRef></descriptorRef>
+									<targetDir>/target</targetDir>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+							<run>
+								<ports>
+									<port>8080:8080</port>
+								</ports>
+								<links>
+									<link>mysqldb:mysqldb</link>
+									<link>kafka:kafka</link>
+								</links>
+								<env>
+									<SPRING_PROFILES_ACTIVE>mysql</SPRING_PROFILES_ACTIVE>
+								</env>
+								<dependsOn>
+									<container>mysqldb</container>
+									<container>kafka</container>
+								</dependsOn>
+							</run>
+						</image>
+
+						<!--mysql container -->
+						<image>
+							<name>${docker.username}/mysql</name>
+							<alias>mysqldb</alias>
+
+							<build>
+								<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/mysql</dockerFileDir>
+
+								<assembly>
+									<descriptorRef></descriptorRef>
+									<targetDir>/target</targetDir>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+
+							<run>
+								<!--expose port for dn -->
+								<ports>
+									<port>3306:3306</port>
+								</ports>
+								<!--set env prams for mysql image -->
+								<env>
+									<MYSQL_DATABASE>transferenciaeletronica</MYSQL_DATABASE>
+									<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
+								</env>
+								<!--wait for db to start -->
+								<wait>
+									<time>70000</time>
+								</wait>
+							</run>
+						</image>
+
+						<!--kafka container -->
+						<image>
+							<name>${docker.username}/kafka</name>
+							<alias>kafka</alias>
+							<build>
+								<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/kafka</dockerFileDir>
+
+								<assembly>
+									<descriptorRef></descriptorRef>
+									<targetDir>/target</targetDir>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+							<run>
+								<!--expose port for dn -->
+								<ports>
+									<port>9092:9092</port>
+									<port>9095:9095</port>
+									<port>2181:2181</port>
+								</ports>
+							</run>
+						</image>
+					</images>
+					<executions>
+						<execution>
+							<goals>
+								<goal>resource</goal>
+								<goal>build</goal>
+							</goals>
+						</execution>
+					</executions>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -155,84 +279,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.25.2</version>
 
-				<configuration>
-
-					<!--<dockerHost>http://127.0.0.1:2375</dockerHost> -->
-					<dockerHost>unix:///var/run/docker.sock</dockerHost>
-
-					<verbose>true</verbose>
-					<images>
-						<image>
-							<name>${docker.image.prefix}/${docker.image.name}</name>
-							<build>
-								<dockerFileDir>${project.basedir}</dockerFileDir>
-
-								<assembly>
-									<descriptorRef></descriptorRef>
-									<targetDir>/target</targetDir>
-								</assembly>
-								<tags>
-									<tag>latest</tag>
-									<tag>${project.version}</tag>
-								</tags>
-							</build>
-							<run>
-								<ports>
-									<port>8080:8080</port>
-								</ports>
-								<links>
-									<link>mysqldb:mysqldb</link>
-								</links>
-								<env>
-									<SPRING_PROFILES_ACTIVE>mysql</SPRING_PROFILES_ACTIVE>
-								</env>
-								<dependsOn>
-									<container>mysqldb</container>
-								</dependsOn>
-							</run>
-						</image>
-						<!--mysql container -->
-						<image>
-							<name>${docker.username}/mysql</name>
-							<alias>mysqldb</alias>
-
-							<build>
-								<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/mysql</dockerFileDir>
-
-								<assembly>
-									<descriptorRef></descriptorRef>
-									<targetDir>/target</targetDir>
-								</assembly>
-								<tags>
-									<tag>latest</tag>
-									<tag>${project.version}</tag>
-								</tags>
-							</build>
-
-							<run>
-								<!--expose port for dn -->
-								<ports>
-									<port>3306:3306</port>
-								</ports>
-								<!--set env prams for mysql image -->
-								<env>
-									<MYSQL_DATABASE>transferenciaeletronica</MYSQL_DATABASE>
-									<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
-								</env>
-								<!--wait for db to start -->
-								<wait>
-									<time>70000</time>
-								</wait>
-							</run>
-						</image>
-					</images>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>

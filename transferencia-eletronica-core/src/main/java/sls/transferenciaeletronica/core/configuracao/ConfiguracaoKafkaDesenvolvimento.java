@@ -19,23 +19,22 @@ import org.springframework.kafka.core.ProducerFactory;
 
 @Configuration
 @Profile("desenvolvimento")
-public class ConfiguracaoKafka {
+public class ConfiguracaoKafkaDesenvolvimento {
 
-	@Value("${spring.embedded.kafka.brokers}")
+	@Value("${spring.kafka.producer.bootstrap-servers}")
 	private String bootstrapServers;
 
+	
 	@Bean
 	public NewTopic transferenciaEvents() {
-		return TopicBuilder.name("transfer-events")
-				.partitions(3)
-				.replicas(3)
-				.build();
+		return TopicBuilder.name("transfer-events").partitions(3).replicas(3).build();
 	}
+	 
 
 	@Bean
 	public Map<String, Object> producerConfigs() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9093,localhost:9094");
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrapServers);
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
@@ -45,7 +44,7 @@ public class ConfiguracaoKafka {
 	@Bean
 	public KafkaAdmin admin() {
 		Map<String, Object> configs = new HashMap<>();
-		configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9093,localhost:9094");
+		configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrapServers);
 		return new KafkaAdmin(configs);
 	}
 
