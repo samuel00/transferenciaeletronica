@@ -87,7 +87,126 @@
 			</properties>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.25.2</version>
 
+						<configuration>
+
+							<!--<dockerHost>http://127.0.0.1:2375</dockerHost> -->
+							<dockerHost>unix:///var/run/docker.sock</dockerHost>
+
+							<verbose>true</verbose>
+							<images>
+								<image>
+									<name>${docker.image.prefix}/${docker.image.name}</name>
+									<alias>${docker.image.name}</alias>
+									<build>
+										<dockerFileDir>${project.basedir}</dockerFileDir>
+
+										<assembly>
+											<descriptorRef></descriptorRef>
+											<targetDir>/target</targetDir>
+										</assembly>
+										<tags>
+											<tag>latest</tag>
+											<tag>${project.version}</tag>
+										</tags>
+									</build>
+									<run>
+										<ports>
+											<port>8080:8080</port>
+										</ports>
+										<links>
+											<link>mysqldb:mysqldb, kafka:kafka</link>
+										</links>
+										<env>
+											<SPRING_PROFILES_ACTIVE>mysql</SPRING_PROFILES_ACTIVE>
+										</env>
+										<dependsOn>
+											<container>mysqldb, kafka</container>
+										</dependsOn>
+									</run>
+								</image>
+
+
+								<!--mysql container -->
+								<image>
+									<name>${docker.username}/mysql</name>
+									<alias>mysqldb</alias>
+
+									<build>
+										<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/mysql</dockerFileDir>
+
+										<assembly>
+											<descriptorRef></descriptorRef>
+											<targetDir>/target</targetDir>
+										</assembly>
+										<tags>
+											<tag>latest</tag>
+											<tag>${project.version}</tag>
+										</tags>
+									</build>
+
+									<run>
+										<!--expose port for dn -->
+										<ports>
+											<port>3306:3306</port>
+										</ports>
+										<!--set env prams for mysql image -->
+										<env>
+											<MYSQL_DATABASE>transferenciaeletronica</MYSQL_DATABASE>
+											<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
+										</env>
+										<!--wait for db to start -->
+										<wait>
+											<time>70000</time>
+										</wait>
+									</run>
+								</image>
+
+								<!--kafka container -->
+								<image>
+									<name>${docker.username}/kafka</name>
+									<alias>kafka</alias>
+									<build>
+										<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/kafka</dockerFileDir>
+
+										<assembly>
+											<descriptorRef></descriptorRef>
+											<targetDir>/target</targetDir>
+										</assembly>
+										<tags>
+											<tag>latest</tag>
+											<tag>${project.version}</tag>
+										</tags>
+									</build>
+									<run>
+										<!--expose port for dn -->
+										<ports>
+											<port>9092:9092</port>
+											<port>9093:9093</port>
+											<port>9095:9095</port>
+											<port>2181:2181</port>
+										</ports>
+										<!-- <env> <KAFKA_LISTENER_SECURITY_PROTOCOL_MAP>SSL:SSL,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT</KAFKA_LISTENER_SECURITY_PROTOCOL_MAP> 
+											<KAFKA_ADVERTISED_LISTENERS>PLAINTEXT_HOST://localhost:9092, PLAINTEXT://kafka:9093, 
+											SSL://127.0.0.1:9095</KAFKA_ADVERTISED_LISTENERS> </env> -->
+									</run>
+								</image>
+
+							</images>
+							<executions>
+								<execution>
+									<goals>
+										<goal>resource</goal>
+										<goal>build</goal>
+									</goals>
+								</execution>
+							</executions>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -112,122 +231,6 @@
 					<excludes>
 						<exclude>${surefire.exclude.testes.integracao}</exclude>
 					</excludes>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.25.2</version>
-
-				<configuration>
-
-					<!--<dockerHost>http://127.0.0.1:2375</dockerHost> -->
-					<dockerHost>unix:///var/run/docker.sock</dockerHost>
-
-					<verbose>true</verbose>
-					<images>
-						<image>
-							<name>${docker.image.prefix}/${docker.image.name}</name>
-							<build>
-								<dockerFileDir>${project.basedir}</dockerFileDir>
-
-								<assembly>
-									<descriptorRef></descriptorRef>
-									<targetDir>/target</targetDir>
-								</assembly>
-								<tags>
-									<tag>latest</tag>
-									<tag>${project.version}</tag>
-								</tags>
-							</build>
-							<run>
-								<ports>
-									<port>8080:8080</port>
-								</ports>
-								<links>
-									<link>mysqldb:mysqldb</link>
-									<link>kafka:kafka</link>
-								</links>
-								<env>
-									<SPRING_PROFILES_ACTIVE>mysql</SPRING_PROFILES_ACTIVE>
-								</env>
-								<dependsOn>
-									<container>mysqldb</container>
-									<container>kafka</container>
-								</dependsOn>
-							</run>
-						</image>
-
-						<!--mysql container -->
-						<image>
-							<name>${docker.username}/mysql</name>
-							<alias>mysqldb</alias>
-
-							<build>
-								<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/mysql</dockerFileDir>
-
-								<assembly>
-									<descriptorRef></descriptorRef>
-									<targetDir>/target</targetDir>
-								</assembly>
-								<tags>
-									<tag>latest</tag>
-									<tag>${project.version}</tag>
-								</tags>
-							</build>
-
-							<run>
-								<!--expose port for dn -->
-								<ports>
-									<port>3306:3306</port>
-								</ports>
-								<!--set env prams for mysql image -->
-								<env>
-									<MYSQL_DATABASE>transferenciaeletronica</MYSQL_DATABASE>
-									<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
-								</env>
-								<!--wait for db to start -->
-								<wait>
-									<time>70000</time>
-								</wait>
-							</run>
-						</image>
-
-						<!--kafka container -->
-						<image>
-							<name>${docker.username}/kafka</name>
-							<alias>kafka</alias>
-							<build>
-								<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/kafka</dockerFileDir>
-
-								<assembly>
-									<descriptorRef></descriptorRef>
-									<targetDir>/target</targetDir>
-								</assembly>
-								<tags>
-									<tag>latest</tag>
-									<tag>${project.version}</tag>
-								</tags>
-							</build>
-							<run>
-								<!--expose port for dn -->
-								<ports>
-									<port>9092:9092</port>
-									<port>9095:9095</port>
-									<port>2181:2181</port>
-								</ports>
-							</run>
-						</image>
-					</images>
-					<executions>
-						<execution>
-							<goals>
-								<goal>resource</goal>
-								<goal>build</goal>
-							</goals>
-						</execution>
-					</executions>
 				</configuration>
 			</plugin>
 			<plugin>
