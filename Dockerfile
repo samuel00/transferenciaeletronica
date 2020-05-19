@@ -1,5 +1,6 @@
 FROM tomcat
 
+# https://hub.docker.com/u/samuelsantana
 LABEL maintainer="samuel.santana"
 
 ADD transferencia-eletronica-api/target/transferencia-eletronica-api.war /usr/local/tomcat/webapps/

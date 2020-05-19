@@ -99,6 +99,30 @@
 
 							<verbose>true</verbose>
 							<images>
+								<!--kafka container -->
+								<image>
+									<name>${docker.username}/kafka-consumer-tranferencia</name>
+									<alias>kafka-consumer</alias>
+									<build>
+										<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/kafka/consumer</dockerFileDir>
+										<assembly>
+											<descriptorRef></descriptorRef>
+											<targetDir>/target</targetDir>
+										</assembly>
+										<tags>
+											<tag>latest</tag>
+											<tag>${project.version}</tag>
+										</tags>
+									</build>
+									<run>
+										<links>
+											<link>kafka:kafka, ${docker.image.name}:${docker.image.name}</link>
+										</links>
+										<dependsOn>
+											<container>${docker.image.name}</container>
+										</dependsOn>
+									</run>
+								</image>
 								<image>
 									<name>${docker.image.prefix}/${docker.image.name}</name>
 									<alias>${docker.image.name}</alias>
@@ -127,6 +151,9 @@
 										<dependsOn>
 											<container>mysqldb, kafka</container>
 										</dependsOn>
+										<wait>
+											<time>90000</time>
+										</wait>
 									</run>
 								</image>
 
@@ -195,7 +222,6 @@
 											SSL://127.0.0.1:9095</KAFKA_ADVERTISED_LISTENERS> </env> -->
 									</run>
 								</image>
-
 							</images>
 							<executions>
 								<execution>

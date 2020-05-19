@@ -1,5 +1,8 @@
 FROM ubuntu:16.04
 
+# https://hub.docker.com/u/samuelsantana
+LABEL maintainer="samuel.santana"
+
 ENV KAFKA_HOME /usr/local/kafka
 ENV KAFKA_SSL /var/private/ssl
 ADD ./script-kafka/start-kafka.sh /scripts/
