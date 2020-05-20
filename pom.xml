@@ -121,6 +121,9 @@
 										<dependsOn>
 											<container>${docker.image.name}</container>
 										</dependsOn>
+										<wait>
+											<time>90000</time>
+										</wait>
 									</run>
 								</image>
 								<image>
@@ -152,7 +155,11 @@
 											<container>mysqldb, kafka</container>
 										</dependsOn>
 										<wait>
-											<time>90000</time>
+											<!-- <http> <url>http://localhost:8080/transferencia-eletronica-api/api/public/status</url> 
+												<method>GET</method> <status>200</status> </http> -->
+											<time>
+												30000
+											</time>
 										</wait>
 									</run>
 								</image>
@@ -220,6 +227,11 @@
 										<!-- <env> <KAFKA_LISTENER_SECURITY_PROTOCOL_MAP>SSL:SSL,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT</KAFKA_LISTENER_SECURITY_PROTOCOL_MAP> 
 											<KAFKA_ADVERTISED_LISTENERS>PLAINTEXT_HOST://localhost:9092, PLAINTEXT://kafka:9093, 
 											SSL://127.0.0.1:9095</KAFKA_ADVERTISED_LISTENERS> </env> -->
+										<wait>
+											<time>
+												30000
+											</time>
+										</wait>
 									</run>
 								</image>
 							</images>
