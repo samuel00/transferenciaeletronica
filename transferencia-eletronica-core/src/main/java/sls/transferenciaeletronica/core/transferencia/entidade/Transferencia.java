@@ -1,30 +1,45 @@
 package sls.transferenciaeletronica.core.transferencia.entidade;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import sls.transferenciaeletronica.core.transferencia.dto.TransferenciaDTO;
 import sls.transferenciaeletronica.core.transferencia.enuns.StatusTransferencia;
 import sls.transferenciaeletronica.core.transferencia.util.FormatadorUtil;
 
 @Entity
 @Table(name="tab_transferencia")
-public class Transferencia {
+@AllArgsConstructor
+@Builder
+public class Transferencia implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3083637479133171609L;
+
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name="data_agendamento")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataAgendamento;
 	
 	@Column(name="data_transferencia")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataTransferencia;
 	
 	@Column(name="conta_origem")

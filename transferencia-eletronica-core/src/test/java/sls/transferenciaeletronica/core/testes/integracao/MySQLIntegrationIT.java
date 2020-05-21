@@ -10,13 +10,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import sls.transferenciaeletronica.core.configuracao.ConfiguracaoDataSource;
+import sls.transferenciaeletronica.core.configuracao.ConfiguracaoDataSourceGeneral;
 import sls.transferenciaeletronica.core.testes.configuracao.ConfiguracaoDataSourceIntegrationTest;
 import sls.transferenciaeletronica.core.transferencia.entidade.Transferencia;
 import sls.transferenciaeletronica.core.transferencia.repositorio.TransferenciaRepositorio;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ConfiguracaoDataSource.class, 
+@ContextConfiguration(classes = { ConfiguracaoDataSourceGeneral.class, 
 		ConfiguracaoDataSourceIntegrationTest.class,
 		TransferenciaRepositorio.class })
 @ActiveProfiles("IT")

@@ -12,7 +12,7 @@ import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import sls.transferenciaeletronica.core.configuracao.ConfiguracaoDataSource;
+import sls.transferenciaeletronica.core.configuracao.ConfiguracaoDataSourceGeneral;
 import sls.transferenciaeletronica.core.configuracao.PropriedadesCore;
 
 /**
@@ -29,7 +29,7 @@ public class InicializadorAplicacao implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(ConfiguracaoAplicacao.class);
-        rootContext.register(ConfiguracaoDataSource.class);
+        rootContext.register(ConfiguracaoDataSourceGeneral.class);
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
         servletContext.addListener(RequestContextListener.class);

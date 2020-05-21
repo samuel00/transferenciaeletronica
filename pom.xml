@@ -24,17 +24,17 @@
 		<liquibase.db.driver>oracle.jdbc.OracleDriver</liquibase.db.driver>
 		<liquibase.default.schema.name>TEMPLATE_WEB</liquibase.default.schema.name>
 
-		<spring.version>4.2.2.RELEASE</spring.version>
-		<hibernate.version>4.2.19.Final</hibernate.version>
-		<hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
-		<slf4j.version>1.7.21</slf4j.version>
+		<spring.version>5.2.4.RELEASE</spring.version>
+		<hibernate.version>5.4.14.Final</hibernate.version>
+		<hibernate.validator.version>6.1.2.Final</hibernate.validator.version>
+		<slf4j.version>1.7.30</slf4j.version>
 		<spring.data.version>1.10.1.RELEASE</spring.data.version>
 		<liquibase.version>3.4.0</liquibase.version>
 		<ojdbc6.version>11.2.0.4</ojdbc6.version>
 
 		<junit.version>4.12</junit.version>
 		<selenium.version>2.46.0</selenium.version>
-		<mockito.version>1.10.19</mockito.version>
+		<mockito.version>2.21.0</mockito.version>
 		<h2.version>1.4.192</h2.version>
 		<jetty.plugin.version>9.2.14.v20151106</jetty.plugin.version>
 		<docker.username>samuelsantana</docker.username>
@@ -80,9 +80,174 @@
 				<build.profile.id>producao</build.profile.id>
 			</properties>
 		</profile>
-		<!-- <profile> <id>local</id> <properties> <liquibase.db.conn.string>jdbc:oracle:thin:@localhost:1522:xe</liquibase.db.conn.string> 
-			<liquibase.db.user>ATUALIZADOR</liquibase.db.user> <liquibase.db.password>123456</liquibase.db.password> 
-			</properties> </profile> -->
+		<profile>
+			<id>docker</id>
+			<properties>
+				<build.profile.id>docker</build.profile.id>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.25.2</version>
+
+						<configuration>
+
+							<!--<dockerHost>http://127.0.0.1:2375</dockerHost> -->
+							<dockerHost>unix:///var/run/docker.sock</dockerHost>
+
+							<verbose>true</verbose>
+							<images>
+								<!--kafka container -->
+								<image>
+									<name>${docker.username}/kafka-consumer-tranferencia</name>
+									<alias>kafka-consumer</alias>
+									<build>
+										<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/kafka/consumer</dockerFileDir>
+										<assembly>
+											<descriptorRef></descriptorRef>
+											<targetDir>/target</targetDir>
+										</assembly>
+										<tags>
+											<tag>latest</tag>
+											<tag>${project.version}</tag>
+										</tags>
+									</build>
+									<run>
+										<links>
+											<link>kafka:kafka, ${docker.image.name}:${docker.image.name}</link>
+										</links>
+										<dependsOn>
+											<container>${docker.image.name}</container>
+										</dependsOn>
+										<wait>
+											<time>90000</time>
+										</wait>
+									</run>
+								</image>
+								<image>
+									<name>${docker.image.prefix}/${docker.image.name}</name>
+									<alias>${docker.image.name}</alias>
+									<build>
+										<dockerFileDir>${project.basedir}</dockerFileDir>
+
+										<assembly>
+											<descriptorRef></descriptorRef>
+											<targetDir>/target</targetDir>
+										</assembly>
+										<tags>
+											<tag>latest</tag>
+											<tag>${project.version}</tag>
+										</tags>
+									</build>
+									<run>
+										<ports>
+											<port>8080:8080</port>
+										</ports>
+										<links>
+											<link>mysqldb:mysqldb, kafka:kafka</link>
+										</links>
+										<env>
+											<SPRING_PROFILES_ACTIVE>mysql</SPRING_PROFILES_ACTIVE>
+										</env>
+										<dependsOn>
+											<container>mysqldb, kafka</container>
+										</dependsOn>
+										<wait>
+											<!-- <http> <url>http://localhost:8080/transferencia-eletronica-api/api/public/status</url> 
+												<method>GET</method> <status>200</status> </http> -->
+											<time>
+												30000
+											</time>
+										</wait>
+									</run>
+								</image>
+
+
+								<!--mysql container -->
+								<image>
+									<name>${docker.username}/mysql</name>
+									<alias>mysqldb</alias>
+
+									<build>
+										<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/mysql</dockerFileDir>
+
+										<assembly>
+											<descriptorRef></descriptorRef>
+											<targetDir>/target</targetDir>
+										</assembly>
+										<tags>
+											<tag>latest</tag>
+											<tag>${project.version}</tag>
+										</tags>
+									</build>
+
+									<run>
+										<!--expose port for dn -->
+										<ports>
+											<port>3306:3306</port>
+										</ports>
+										<!--set env prams for mysql image -->
+										<env>
+											<MYSQL_DATABASE>transferenciaeletronica</MYSQL_DATABASE>
+											<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
+										</env>
+										<!--wait for db to start -->
+										<wait>
+											<time>70000</time>
+										</wait>
+									</run>
+								</image>
+
+								<!--kafka container -->
+								<image>
+									<name>${docker.username}/kafka</name>
+									<alias>kafka</alias>
+									<build>
+										<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/kafka</dockerFileDir>
+
+										<assembly>
+											<descriptorRef></descriptorRef>
+											<targetDir>/target</targetDir>
+										</assembly>
+										<tags>
+											<tag>latest</tag>
+											<tag>${project.version}</tag>
+										</tags>
+									</build>
+									<run>
+										<!--expose port for dn -->
+										<ports>
+											<port>9092:9092</port>
+											<port>9093:9093</port>
+											<port>9095:9095</port>
+											<port>2181:2181</port>
+										</ports>
+										<!-- <env> <KAFKA_LISTENER_SECURITY_PROTOCOL_MAP>SSL:SSL,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT</KAFKA_LISTENER_SECURITY_PROTOCOL_MAP> 
+											<KAFKA_ADVERTISED_LISTENERS>PLAINTEXT_HOST://localhost:9092, PLAINTEXT://kafka:9093, 
+											SSL://127.0.0.1:9095</KAFKA_ADVERTISED_LISTENERS> </env> -->
+										<wait>
+											<time>
+												30000
+											</time>
+										</wait>
+									</run>
+								</image>
+							</images>
+							<executions>
+								<execution>
+									<goals>
+										<goal>resource</goal>
+										<goal>build</goal>
+									</goals>
+								</execution>
+							</executions>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<build>
@@ -155,84 +320,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.25.2</version>
 
-				<configuration>
-
-					<!--<dockerHost>http://127.0.0.1:2375</dockerHost> -->
-					<dockerHost>unix:///var/run/docker.sock</dockerHost>
-
-					<verbose>true</verbose>
-					<images>
-						<image>
-							<name>${docker.image.prefix}/${docker.image.name}</name>
-							<build>
-								<dockerFileDir>${project.basedir}</dockerFileDir>
-
-								<assembly>
-									<descriptorRef></descriptorRef>
-									<targetDir>/target</targetDir>
-								</assembly>
-								<tags>
-									<tag>latest</tag>
-									<tag>${project.version}</tag>
-								</tags>
-							</build>
-							<run>
-								<ports>
-									<port>8080:8080</port>
-								</ports>
-								<links>
-									<link>mysqldb:mysqldb</link>
-								</links>
-								<env>
-									<SPRING_PROFILES_ACTIVE>mysql</SPRING_PROFILES_ACTIVE>
-								</env>
-								<dependsOn>
-									<container>mysqldb</container>
-								</dependsOn>
-							</run>
-						</image>
-						<!--mysql container -->
-						<image>
-							<name>${docker.username}/mysql</name>
-							<alias>mysqldb</alias>
-
-							<build>
-								<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/mysql</dockerFileDir>
-
-								<assembly>
-									<descriptorRef></descriptorRef>
-									<targetDir>/target</targetDir>
-								</assembly>
-								<tags>
-									<tag>latest</tag>
-									<tag>${project.version}</tag>
-								</tags>
-							</build>
-
-							<run>
-								<!--expose port for dn -->
-								<ports>
-									<port>3306:3306</port>
-								</ports>
-								<!--set env prams for mysql image -->
-								<env>
-									<MYSQL_DATABASE>transferenciaeletronica</MYSQL_DATABASE>
-									<MYSQL_ROOT_PASSWORD>root</MYSQL_ROOT_PASSWORD>
-								</env>
-								<!--wait for db to start -->
-								<wait>
-									<time>70000</time>
-								</wait>
-							</run>
-						</image>
-					</images>
-				</configuration>				
-			</plugin>
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
@@ -302,7 +390,68 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
+			<plugin>
+				<groupId>org.apache.openejb.maven</groupId>
+				<artifactId>tomee-maven-plugin</artifactId>
+				<version>1.7.1</version>
+				<configuration>
+					<tomeeVersion>1.7.1</tomeeVersion>
+					<tomeeClassifier>plus</tomeeClassifier>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.platform</groupId>
+						<artifactId>junit-platform-surefire-provider</artifactId>
+						<version>1.0.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
 		</plugins>
 	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.3.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>2.23.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--BEGIN IDE NOT COMPTIBLE WITHJUNIT 5 -->
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-runner</artifactId>
+			<version>1.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- END IDE NOT COMPTIBLE WITHJUNIT 5 -->
+	</dependencies>
 </project>

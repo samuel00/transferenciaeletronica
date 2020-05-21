@@ -21,6 +21,8 @@ public class RecursoBaseTest {
 	
 	protected final static String UTF_8 = "utf8";
 	protected final static String PADRAO_DATA = "yyyy-MM-dd";
+	
+	protected final static String NOME_TOPICO = "transfer-events";
 
 	protected MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
 			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName(UTF_8));

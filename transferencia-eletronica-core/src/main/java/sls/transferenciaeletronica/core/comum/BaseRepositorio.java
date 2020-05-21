@@ -1,14 +1,13 @@
 package sls.transferenciaeletronica.core.comum;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  * Classe com comportamentos comuns para todos os repositorios.
@@ -20,6 +19,15 @@ public class BaseRepositorio<T, ID> {
 
     @PersistenceContext(unitName = "transferencia-eletronica-PU")
     private EntityManager entityManager;
+
+
+    private Class<T> persistentClass;
+
+    public BaseRepositorio() {
+        this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
+                        .getGenericSuperclass())
+                        .getActualTypeArguments()[0];
+    }
 
     protected void aplicarParametros(Query query, Map<String, Object> parametros) {
         for (Entry<String, Object> parametro : parametros.entrySet()) {
@@ -58,6 +66,12 @@ public class BaseRepositorio<T, ID> {
         return objeto;
     }
 
+    public T merge(T objeto) {
+        this.entityManager.merge(objeto);
+        this.entityManager.flush();
+        return objeto;
+    }
+
     public void remover(T objeto) {
         this.entityManager.remove(objeto);
     }
@@ -73,6 +87,9 @@ public class BaseRepositorio<T, ID> {
         return this.entityManager.find(entityClass, id);
     }
 	
-	
+    public List<T> listAll(){
+        return entityManager.createQuery("Select t from " + persistentClass.getSimpleName() + " t").getResultList();
+    }
+
 	
 }
