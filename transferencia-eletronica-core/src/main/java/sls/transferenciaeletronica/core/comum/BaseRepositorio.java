@@ -20,8 +20,7 @@ public class BaseRepositorio<T, ID> {
     @PersistenceContext(unitName = "transferencia-eletronica-PU")
     private EntityManager entityManager;
 
-
-    private Class<T> persistentClass;
+    protected Class<T> persistentClass;
 
     public BaseRepositorio() {
         this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
