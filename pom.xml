@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>sls</groupId>
 	<artifactId>transferencia-eletronica</artifactId>
-	<version>1.1</version>
+	<version>1.2</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>transferencia-eletronica-api</module>
@@ -38,6 +38,8 @@
 		<h2.version>1.4.192</h2.version>
 		<jetty.plugin.version>9.2.14.v20151106</jetty.plugin.version>
 		<docker.username>samuelsantana</docker.username>
+		<junit.jupiter.version>5.7.0-M1</junit.jupiter.version>
+
 
 		<!--usuario docker hub -->
 		<docker.image.prefix>${docker.username}</docker.image.prefix>
@@ -101,7 +103,7 @@
 							<images>
 								<!--kafka container -->
 								<image>
-									<name>${docker.username}/kafka-consumer-tranferencia</name>
+									<name>${docker.username}/kafka-consumer-tranferencia:${project.version}</name>
 									<alias>kafka-consumer</alias>
 									<build>
 										<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/kafka/consumer</dockerFileDir>
@@ -127,7 +129,7 @@
 									</run>
 								</image>
 								<image>
-									<name>${docker.image.prefix}/${docker.image.name}</name>
+									<name>${docker.image.prefix}/${docker.image.name}:${project.version}</name>
 									<alias>${docker.image.name}</alias>
 									<build>
 										<dockerFileDir>${project.basedir}</dockerFileDir>
@@ -167,7 +169,7 @@
 
 								<!--mysql container -->
 								<image>
-									<name>${docker.username}/mysql</name>
+									<name>${docker.username}/mysql:${project.version}</name>
 									<alias>mysqldb</alias>
 
 									<build>
@@ -202,7 +204,7 @@
 
 								<!--kafka container -->
 								<image>
-									<name>${docker.username}/kafka</name>
+									<name>${docker.username}/kafka:${project.version}</name>
 									<alias>kafka</alias>
 									<build>
 										<dockerFileDir>${project.basedir}/transferencia-eletronica-script/docker-script/kafka</dockerFileDir>
@@ -224,9 +226,6 @@
 											<port>9095:9095</port>
 											<port>2181:2181</port>
 										</ports>
-										<!-- <env> <KAFKA_LISTENER_SECURITY_PROTOCOL_MAP>SSL:SSL,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT</KAFKA_LISTENER_SECURITY_PROTOCOL_MAP> 
-											<KAFKA_ADVERTISED_LISTENERS>PLAINTEXT_HOST://localhost:9092, PLAINTEXT://kafka:9093, 
-											SSL://127.0.0.1:9095</KAFKA_ADVERTISED_LISTENERS> </env> -->
 										<wait>
 											<time>
 												30000
@@ -420,14 +419,14 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.3.1</version>
+			<version>5.4.0</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
-			<version>2.23.0</version>
+			<version>3.3.3</version>
 			<scope>test</scope>
 		</dependency>
 

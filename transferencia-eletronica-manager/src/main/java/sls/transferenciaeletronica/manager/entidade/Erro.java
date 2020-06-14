@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="tab_requisicao_erro")
+@Table(name="TAB_REQUISICAO_ERRO")
 public class Erro implements Serializable{
 	
 	private static final long serialVersionUID = -4609689208810205727L;
@@ -31,7 +31,7 @@ public class Erro implements Serializable{
 	@JsonIgnore
 	private Requisicao requisicao;
 	
-	@Column(name= "tae_motivo_ocorrencia", nullable=true, updatable = false)
+	@Column(name= "tae_motivo_ocorrencia", nullable=true, updatable = false, columnDefinition = "LONGTEXT")
 	@Lob
 	private String motivo;
 	
@@ -41,7 +41,7 @@ public class Erro implements Serializable{
 	@Column(name= "tae_metodo_ocorrencia", nullable=true, updatable = false)
 	private String metodo;
 	
-	@Column(name= "tae_stacktrace",  updatable = false, columnDefinition="clob")
+	@Column(name= "tae_stacktrace",  updatable = false, columnDefinition = "LONGTEXT")
 	@Lob
 	private String stacktrace;
 

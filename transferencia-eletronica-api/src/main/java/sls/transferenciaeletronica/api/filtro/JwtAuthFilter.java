@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +18,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import sls.transferenciaeletronica.core.seguranca.servico.JwtServico;
 import sls.transferenciaeletronica.core.seguranca.servico.UsuarioServico;
 
+@Configuration
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private JwtServico jwtServico;
+    
     private UsuarioServico usuarioServico;
     
+    @Autowired
     public JwtAuthFilter( JwtServico jwtService, UsuarioServico usuarioService ) {
         this.jwtServico = jwtService;
         this.usuarioServico = usuarioService;

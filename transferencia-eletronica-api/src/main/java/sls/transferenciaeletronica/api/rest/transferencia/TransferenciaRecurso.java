@@ -31,7 +31,7 @@ public class TransferenciaRecurso {
 
 	private HTTPResponse httpResponse;
 
-	@RequestMapping( method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+	@RequestMapping(method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
 	public ResponseEntity<?> criarAgendamento(@Valid @RequestBody TransferenciaDTO transferenciaDTO,
 			HttpServletRequest httpServletRequest) throws ExcecaoGenerica {
 		try {
@@ -44,7 +44,7 @@ public class TransferenciaRecurso {
 		}
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
+	@RequestMapping(method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
 	public ResponseEntity<?> recuperarAgendamentos(HttpServletRequest request)
 			throws ExcecaoDeValidacao, ExcecaoGenerica {
 		logger.debug("Consulta Agendamento");

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>sls</groupId>
 		<artifactId>transferencia-eletronica</artifactId>
-		<version>1.1</version>
+		<version>1.2</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>transferencia-eletronica-api</artifactId>
@@ -195,12 +195,12 @@
 		</dependency>
 
 		<!-- Testes Unitários e de Integracao -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>

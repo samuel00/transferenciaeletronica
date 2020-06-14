@@ -7,7 +7,7 @@
 		<groupId>sls</groupId>
 		<artifactId>transferencia-eletronica</artifactId>
 		<relativePath>../pom.xml</relativePath>
-		<version>1.1</version>
+		<version>1.2</version>
 	</parent>
 	<artifactId>transferencia-eletronica-core</artifactId>
 	<packaging>jar</packaging>
@@ -62,9 +62,6 @@
 			</build>
 		</profile>
 	</profiles>
-
-
-
 
 	<build>
 		<filters>
@@ -185,12 +182,12 @@
 		</dependency>
 
 		<!-- Testes Unitários e de Integracao -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>

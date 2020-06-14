@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
@@ -15,6 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import sls.transferenciaeletronica.core.seguranca.entidade.Usuario;
 
 @Service
+@PropertySource("classpath:values.properties")
 public class JwtServico {	
 
     @Value("${security.jwt.expiracao}")
@@ -24,7 +26,7 @@ public class JwtServico {
     private String chaveAssinatura;
 
     public String gerarToken( Usuario usuario ){
-        long expString = Long.valueOf(expiracao);
+        long expString = Long.valueOf(this.expiracao);
         LocalDateTime dataHoraExpiracao = LocalDateTime.now().plusMinutes(expString);
         Instant instant = dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant();
         Date data = Date.from(instant);

@@ -25,20 +25,17 @@ import sls.transferenciaeletronica.core.transferencia.util.FormatadorUtil;
 @Builder
 public class Transferencia implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3083637479133171609L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="data_agendamento")
+	@Column(name="data_agendamento", columnDefinition = "DATE")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataAgendamento;
 	
-	@Column(name="data_transferencia")
+	@Column(name="data_transferencia", columnDefinition = "DATE")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataTransferencia;
 	

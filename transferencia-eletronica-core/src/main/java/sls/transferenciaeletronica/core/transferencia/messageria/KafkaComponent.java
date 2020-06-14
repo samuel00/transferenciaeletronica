@@ -24,10 +24,12 @@ public class KafkaComponent {
 
 	public ListenableFuture<SendResult<String, String>> enviaTransferenciaEvento(Transferencia transferencia) {
 		ParametroEnvioKafka parametroEnvioKafka = criarParametroKafka(transferencia);
-			ProducerRecord<String, String> producerRecord = buildProducerRecord(parametroEnvioKafka.getKey(), parametroEnvioKafka.getValue(), TOPIC);
-			ListenableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate.send(producerRecord);
-			listenableFuture.addCallback(new PostEnvioMensagem(parametroEnvioKafka.getKey(), parametroEnvioKafka.getValue()));
-			return listenableFuture;		
+		ProducerRecord<String, String> producerRecord = buildProducerRecord(parametroEnvioKafka.getKey(),
+				parametroEnvioKafka.getValue(), TOPIC);
+		ListenableFuture<SendResult<String, String>> listenableFuture = this.kafkaTemplate.send(producerRecord);
+		listenableFuture
+				.addCallback(new PostEnvioMensagem(parametroEnvioKafka.getKey(), parametroEnvioKafka.getValue()));
+		return listenableFuture;
 	}
 
 	private ParametroEnvioKafka criarParametroKafka(Transferencia transferencia) {
