@@ -25,7 +25,7 @@ public class AdministrativoRecurso {
 	@Autowired
 	private AspectManagerService aspectManagerService;
 	
-	@RequestMapping(value = "", method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
+	@RequestMapping(method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
     public ResponseEntity<?> recuperarAgendamentos(HttpServletRequest request) throws ExcecaoDeValidacao, ExcecaoGenerica {
        logger.debug("Consulta Agendamento");
        try {

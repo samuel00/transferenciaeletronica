@@ -10,13 +10,10 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import sls.transferenciaeletronica.api.filtro.JwtAuthFilter;
 
 @Configuration
 @EnableScheduling
@@ -42,8 +39,7 @@ public class ConfiguracaoAplicacao {
             }
         };
     }
-    
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
     	return new BCryptPasswordEncoder();

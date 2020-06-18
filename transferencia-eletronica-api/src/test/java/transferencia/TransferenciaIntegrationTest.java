@@ -98,7 +98,7 @@ public class TransferenciaIntegrationTest extends RecursoBaseTest {
 		mockMvc.perform(post(getRecurso()).contentType(MediaType.APPLICATION_JSON)
 				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia))).andDo(print())
 				.andExpect(status().isCreated()).andExpect(jsonPath("$.status", is("CREATED"))).andReturn();
-		ConsumerRecord<String, String> received =KafkaTestUtils.getSingleRecord(consumer, "transfer-events");
+		ConsumerRecord<String, String> received = KafkaTestUtils.getSingleRecord(consumer, "transfer-events");
 		Assert.assertNotNull(received.value());
 	}
 
@@ -109,18 +109,18 @@ public class TransferenciaIntegrationTest extends RecursoBaseTest {
 		mockMvc.perform(post(getRecurso()).contentType(MediaType.APPLICATION_JSON)
 				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia))).andExpect(status().isCreated())
 				.andExpect(jsonPath("$.status", is("CREATED"))).andReturn();
-		ConsumerRecord<String, String> received =KafkaTestUtils.getSingleRecord(consumer, "transfer-events");
+		ConsumerRecord<String, String> received = KafkaTestUtils.getSingleRecord(consumer, "transfer-events");
 		Assert.assertNotNull(received.value());
 	}
 
 	@Test
-	public void testeTransferenciaTaxaCCreated() throws Exception {
-		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, adicionaDiasNaData(15L), CONTA_ORIGEM,
+	public void testeTransferenciaTaxaCStatus201() throws Exception {
+		TransferenciaDTO transferencia = new TransferenciaDTO(DEZ_REAIS, adicionaDiasNaData(17L), CONTA_ORIGEM,
 				CONTA_DESTINO);
 		mockMvc.perform(post(getRecurso()).contentType(MediaType.APPLICATION_JSON)
 				.content(ConverterUtil.ObjetoParaJsonBytes(transferencia))).andExpect(status().isCreated())
 				.andExpect(jsonPath("$.status", is("CREATED"))).andReturn();
-		ConsumerRecord<String, String> received =KafkaTestUtils.getSingleRecord(consumer, "transfer-events");
+		ConsumerRecord<String, String> received = KafkaTestUtils.getSingleRecord(consumer, "transfer-events");
 		Assert.assertNotNull(received.value());
 	}
 

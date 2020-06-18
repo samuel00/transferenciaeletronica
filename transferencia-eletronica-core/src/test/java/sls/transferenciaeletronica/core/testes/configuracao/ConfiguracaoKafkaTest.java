@@ -32,8 +32,6 @@ public class ConfiguracaoKafkaTest {
 
 		return props;
 	}
-	
-	
 
 	@Bean
 	public KafkaAdmin admin() {

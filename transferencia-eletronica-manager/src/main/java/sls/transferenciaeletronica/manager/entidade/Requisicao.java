@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="TAB_REQUISICAO")
-public class Requisicao implements Serializable{
+public class Requisicao implements Serializable {
 
 	private static final long serialVersionUID = -7700060984818848442L;
 	

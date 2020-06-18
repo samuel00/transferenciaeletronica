@@ -17,10 +17,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@Profile("test")
 public class ConfiguracaoDataSourceTest {
 
 	@Bean
-	@Profile("test")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactory.setDataSource(dataSource());
@@ -31,7 +31,6 @@ public class ConfiguracaoDataSourceTest {
 		return entityManagerFactory;
 	}
 
-	@Profile("test")
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -43,12 +42,11 @@ public class ConfiguracaoDataSourceTest {
 
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.DerbyTenSevenDialect");
 		properties.setProperty("hibernate.show_sql", "true");
-
 		properties.setProperty("hibernate.format_sql", "true");
 		properties.setProperty("hibernate.hbm2ddl.import_files", "import.sql");
+		properties.setProperty("hibernate.hbm2ddl.auto", "create");
 		return properties;
 	}
 

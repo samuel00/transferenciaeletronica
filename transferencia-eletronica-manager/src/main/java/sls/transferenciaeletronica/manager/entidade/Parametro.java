@@ -31,15 +31,15 @@ public class Parametro implements Serializable{
 	@JsonIgnore
 	private Requisicao requisicao;
 	
-	@Column(name= "tap_header", nullable=false, updatable = false, columnDefinition = "LONGTEXT")
+	@Column(name= "tap_header", nullable=false, updatable = false)
 	@Lob
 	private String header;
 	
-	@Column(name= "tap_entrada", nullable=false, updatable = false, columnDefinition = "LONGTEXT")
+	@Column(name= "tap_entrada", nullable=false, updatable = false)
 	@Lob
 	private String entrada;
 	
-	@Column(name= "tap_saida", nullable=true, updatable = false, columnDefinition = "LONGTEXT")
+	@Column(name= "tap_saida", nullable=true, updatable = false)
 	@Lob
 	private String saida;
 	
