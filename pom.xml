@@ -418,8 +418,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>5.6.0</version>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.3.1</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -436,13 +436,6 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.12</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>RELEASE</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!--BEGIN IDE NOT COMPTIBLE WITHJUNIT 5 -->

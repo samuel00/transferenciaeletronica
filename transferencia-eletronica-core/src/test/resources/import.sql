@@ -1,3 +1,4 @@
 insert into tab_transferencia (id, conta_destino, conta_origem, data_agendamento, data_transferencia, status, valor, valorTaxa) values (99999, 'XXXXX', 'YYYYY', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 10.0, 2.0);
 insert into TAB_REQUISICAO (tar_id, tar_codigo, tar_contexto, tar_data, tar_ip_origem, tar_path, tar_tempo_execucao, tar_tipo, tar_uuid) values (99999, 200, '/transferencia-eletronica', CURRENT_DATE, '10.0.1.127', '/transferencia', 1, 'GET', 'XXYY')
-insert into TAB_REQUISICAO_PARAMETRO (tap_id, tap_classe_invocada, tap_entrada, tap_header, tap_metodo_invocado, tap_requisicao_id, tap_saida) values (99999, 'teste', 'teste', 'teste', 'teste',99999, 'Funcionou')
+insert into TAB_REQUISICAO_PARAMETRO (tap_id, tap_classe_invocada, tap_entrada, tap_header, tap_metodo_invocado, tap_requisicao_id, tap_saida) values (99999, 'teste', 'teste', 'teste', 'teste',99999, 'Funcionou');
+insert into TAB_SEGURANCA_USUARIO (id, login, senha, admin) values (1, 'adm', '$2a$10$aUfiyUIpdfhD3Kko6vzZqOUtn2zanHRzVolnGjNrIK14zg/C9zBky', true);
